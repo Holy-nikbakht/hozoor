@@ -34,6 +34,12 @@
   --glow1:rgba(67,56,202,0.09); --glow2:rgba(21,128,61,0.06);
   --glow1-strong:rgba(67,56,202,0.14); --glow2-strong:rgba(21,128,61,0.10);
   --topbar-bg:rgba(255,255,255,0.78); --navbar-bg-mobile:rgba(255,255,255,0.85); --overlay-bg:rgba(20,24,40,0.35);
+  /* Unified Tokens (Phase 9.2) */
+  --accent:#06b6d4; --accent-soft:rgba(6,182,212,0.12);
+  --space-xs:4px; --space-sm:8px; --space-md:12px; --space-lg:16px; --space-xl:24px; --space-xxl:32px;
+  --radius-xs:6px; --radius-sm:10px; --radius-md:14px; --radius:18px; --radius-lg:22px; --radius-full:9999px;
+  --gray-100:#f8fafc; --gray-200:#e2e8f0; --gray-300:#cbd5e1; --gray-400:#94a3b8;
+  --gray-500:#64748b; --gray-600:#475569; --gray-700:#334155; --gray-800:#1e293b; --gray-900:#0f172a;
 }
 html[data-theme="dark"]{
   --bg:#0a0a0d; --bg2:#111115; --bg3:#17171c; --bg4:#1e1e24;
@@ -52,6 +58,9 @@ html[data-theme="dark"]{
   --glow1:rgba(47,111,237,0.10); --glow2:rgba(34,197,94,0.06);
   --glow1-strong:rgba(47,111,237,0.20); --glow2-strong:rgba(34,197,94,0.12);
   --topbar-bg:rgba(17,17,21,0.85); --navbar-bg-mobile:rgba(17,17,21,0.92); --overlay-bg:rgba(5,5,7,0.6);
+  --accent:#06b6d4; --accent-soft:rgba(6,182,212,0.15);
+  --gray-100:#0f172a; --gray-200:#1e293b; --gray-300:#334155; --gray-400:#475569;
+  --gray-500:#64748b; --gray-600:#94a3b8; --gray-700:#cbd5e1; --gray-800:#e2e8f0; --gray-900:#f8fafc;
 }
 html,body{transition:background .3s ease,color .3s ease;}
 
@@ -72,28 +81,120 @@ body{
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:8px;}
 ::-webkit-scrollbar-track{background:transparent;}
 
+/* ===== لایه/بخش ===== */
+/* --- HIERARCHICAL TYPOGRAPHY (Phase 9.3) --- */
+.type-page-title { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.3; letter-spacing: -0.01em; }
+.type-subtitle { font-size: 13.5px; font-weight: 500; color: var(--text-muted); line-height: 1.6; }
+.type-section-title { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.4; }
+.type-body { font-size: 13.5px; font-weight: 400; color: var(--text); line-height: 1.7; }
+.type-label { font-size: 12.5px; font-weight: 600; color: var(--text-muted); line-height: 1.4; display: block; margin-bottom: 6px; }
+.type-caption { font-size: 11.5px; font-weight: 400; color: var(--text-muted); line-height: 1.5; }
+.type-code { font-family: monospace; font-size: 12px; }
+
+/* --- MICRO-ANIMATIONS (Phase 9.4) --- */
+.btn {
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 6px 20px var(--primary-glow);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+@keyframes attPop {
+  0% { transform: scale(0.92); }
+  60% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.attendance-segment button.active.present {
+  background: var(--success); color: #fff;
+  box-shadow: 0 4px 14px rgba(21,128,61,0.35);
+  animation: attPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.attendance-segment button.active.absent {
+  background: var(--danger); color: #fff;
+  box-shadow: 0 4px 14px rgba(220,38,38,0.35);
+  animation: attPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes cardSlideIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.page-fade-in .card, .page-fade-in .panel, .page-fade-in .hero-stat {
+  animation: cardSlideIn 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.page-fade-in .card:nth-child(2), .page-fade-in .panel:nth-child(2) { animation-delay: 0.05s; }
+.page-fade-in .card:nth-child(3), .page-fade-in .panel:nth-child(3) { animation-delay: 0.1s; }
+.page-fade-in .card:nth-child(4), .page-fade-in .panel:nth-child(4) { animation-delay: 0.15s; }
+
+/* --- ROLE ICONS & AVATARS (Phase 9.6) --- */
+.ui-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.role-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.role-icon-admin { color: var(--primary); }
+.role-icon-principal { color: var(--success); }
+.role-icon-deputy { color: var(--warning); }
+.role-icon-teacher { color: var(--accent, #06b6d4); }
+.school-avatar-box {
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px var(--primary-glow);
+}
+
 /* ---------- LOGIN ---------- */
+/* ===== لایه/بخش ===== */
+/* --- REDESIGNED LOGIN SCREEN (Phase 9.6) --- */
 #loginScreen{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(circle at 20% 10%, var(--glow1-strong), transparent 50%),
-    radial-gradient(circle at 85% 85%, var(--glow2-strong), transparent 45%),
-    var(--bg);
+    radial-gradient(circle at 10% 20%, rgba(67, 56, 202, 0.22), transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.18), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(47, 111, 237, 0.08), transparent 65%),
+    linear-gradient(135deg, var(--bg) 0%, var(--bg4) 100%);
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
   padding:16px;
 }
-.login-box{
-  background:var(--glass-card);
-  border:1px solid var(--glass-border);
-  backdrop-filter:var(--blur);
-  -webkit-backdrop-filter:var(--blur);
-  border-radius:var(--radius);
-  padding:34px 28px;
-  width:100%;
-  max-width:380px;
-  box-shadow:var(--shadow-lg);
+#loginScreen::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.login-box {
+  position: relative;
+  z-index: 2;
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border-radius: var(--radius-lg);
+  padding: 38px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.08) inset;
 }
 .login-box h1{
   font-size:20px;
@@ -226,6 +327,19 @@ body{
   position:sticky;top:0;z-index:20;
 }
 .topbar h1{font-size:16.5px;font-weight:700;letter-spacing:-0.01em;}
+.sync-indicator{position:relative;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--glass2);cursor:pointer;transition:var(--transition);}
+.sync-indicator:hover{background:var(--glass);}
+.sync-dot{width:9px;height:9px;border-radius:50%;background:var(--gray-400);box-shadow:0 0 0 3px transparent;transition:background .2s,box-shadow .2s;}
+.sync-indicator[data-state="synced"] .sync-dot{background:var(--success);box-shadow:0 0 0 3px var(--success-soft);}
+.sync-indicator[data-state="syncing"] .sync-dot{background:var(--warning);box-shadow:0 0 0 3px var(--warning-soft);animation:syncSpin 1s linear infinite;}
+.sync-indicator[data-state="offline"] .sync-dot,
+.sync-indicator[data-state="error"] .sync-dot{background:var(--danger);box-shadow:0 0 0 3px var(--danger-soft);}
+@keyframes syncSpin{0%{transform:rotate(0deg) scale(1);}50%{transform:rotate(180deg) scale(1.15);}100%{transform:rotate(360deg) scale(1);}}
+.sync-details-panel{position:fixed;top:58px;left:16px;z-index:1200;background:var(--glass-card);backdrop-filter:var(--blur);border:1px solid var(--glass-border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:14px 16px;min-width:220px;font-size:13px;color:var(--text);}
+html[dir="rtl"] .sync-details-panel{left:auto;right:16px;}
+.sync-details-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.sync-details-row:last-child{margin-bottom:0;}
+.sync-details-label{color:var(--text-muted);font-size:12px;}
 .content{padding:24px;flex:1;}
 .content-mobile-pad{}
 
@@ -383,6 +497,16 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 
   .content{padding:16px;padding-bottom:96px;}
   .topbar{padding:12px 16px;}
+
+  /* بهبود ظاهر فرم‌ها و مودال‌ها روی موبایل */
+  .modal-box{max-width:100%;padding:18px 16px;border-radius:16px 16px 0 0;}
+  .modal-overlay{padding:0;align-items:flex-end;}
+  .modal-box{max-height:92vh;}
+  .field input,select,.field select{font-size:16px;padding:12px 12px;} /* جلوگیری از زوم خودکار iOS روی فوکوس */
+  .modal-actions{flex-direction:column;}
+  .modal-actions .btn{width:100%;padding:13px 16px;}
+  .field{margin-bottom:12px;}
+  table{font-size:12.5px;}
 }
 
 /* ---------- THEME TOGGLE ---------- */
@@ -439,10 +563,157 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 .toast.error .toast-icon{background:var(--danger-soft);color:var(--danger);}
 .toast.info .toast-icon{background:var(--primary-soft);color:var(--primary);}
 
+/* ---------- UNDO TOAST (Phase 10.3) ---------- */
+.toast.undo-toast{
+  position:relative;overflow:hidden;
+  padding-bottom:14px;
+  background:var(--bg3);
+}
+.toast.undo-toast .toast-icon{background:var(--danger-soft);color:var(--danger);}
+.undo-toast-msg{white-space:nowrap;}
+.undo-toast-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  background:none;border:none;color:var(--primary);
+  font-family:inherit;font-size:12.5px;font-weight:700;
+  cursor:pointer;padding:4px 6px;margin-inline-start:2px;border-radius:6px;
+  transition:background .2s ease;
+}
+.undo-toast-btn:hover{background:var(--primary-soft);}
+.undo-toast-bar{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--glass2);
+}
+.undo-toast-bar-fill{
+  height:100%;width:100%;background:var(--primary);
+}
+
+/* ---------- GLOBAL SEARCH (Cmd+K) (Phase 10.1) ---------- */
+.gsearch-btn{
+  display:flex;align-items:center;gap:8px;
+  background:var(--glass2);border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);padding:7px 10px;
+  color:var(--text-muted);font-family:inherit;font-size:12.5px;
+  cursor:pointer;transition:all .2s ease;
+}
+.gsearch-btn:hover{background:var(--primary-soft);color:var(--primary);border-color:var(--primary-glow);}
+.gsearch-btn .kbd{
+  font-size:10.5px;font-weight:700;background:var(--bg3);
+  border:1px solid var(--border2);border-radius:5px;padding:1px 5px;
+  color:var(--text3);line-height:1.5;
+}
+@media (max-width:820px){.gsearch-btn .gsearch-btn-label,.gsearch-btn .kbd{display:none;}}
+
+.gsearch-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:var(--overlay-bg);backdrop-filter:var(--blur);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:12vh 16px 0;
+}
+.gsearch-overlay.open{display:flex;}
+.gsearch-panel{
+  width:100%;max-width:560px;
+  background:var(--glass-card);border:1px solid var(--glass-border);
+  border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  animation:fadeSlideIn .22s cubic-bezier(0.22,1,0.36,1);
+}
+.gsearch-input-row{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;border-bottom:1px solid var(--glass-border);
+  color:var(--text3);
+}
+.gsearch-input-row input{
+  flex:1;border:none;background:none;outline:none;
+  font-family:inherit;font-size:15px;color:var(--text);
+}
+.gsearch-input-row .gsearch-esc{
+  font-size:10.5px;font-weight:700;background:var(--glass2);
+  border:1px solid var(--border2);border-radius:5px;padding:2px 6px;color:var(--text3);
+}
+.gsearch-results{max-height:52vh;overflow-y:auto;padding:8px;}
+.gsearch-group-label{
+  font-size:11px;font-weight:700;color:var(--text3);
+  padding:8px 10px 4px;
+}
+.gsearch-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 10px;border-radius:var(--radius-sm);
+  cursor:pointer;transition:background .15s ease;
+}
+.gsearch-item:hover,.gsearch-item.active{background:var(--primary-soft);}
+.gsearch-item .gsearch-item-icon{
+  width:32px;height:32px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--glass2);color:var(--primary);
+}
+.gsearch-item-text{min-width:0;}
+.gsearch-item-title{font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gsearch-item-sub{font-size:11.5px;color:var(--text-muted);}
+.gsearch-empty{padding:30px 16px;text-align:center;color:var(--text-muted);font-size:13px;}
+
 /* ---------- EMPTY STATE (with SVG + action) ---------- */
 .empty-state .empty-icon{margin-bottom:12px;display:flex;justify-content:center;}
 .empty-state .empty-icon svg{width:46px;height:46px;color:var(--text3);}
 .empty-state .empty-action{margin-top:14px;}
+
+/* ---------- JALALI GRAPHICAL DATE PICKER (Phase 10.7) ---------- */
+.jdp-trigger{
+  width:100%;display:flex;align-items:center;gap:8px;
+  padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  font-size:13.5px;font-family:inherit;background:var(--glass2);color:var(--text);
+  cursor:pointer;transition:var(--transition);text-align:right;
+}
+.jdp-trigger:hover{border-color:var(--border2);}
+.jdp-trigger:focus,.jdp-trigger.open{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);background:var(--bg4);}
+.jdp-trigger .jdp-trigger-icon{color:var(--text3);flex-shrink:0;}
+.jdp-trigger .jdp-trigger-label{flex:1;}
+.jdp-trigger.placeholder .jdp-trigger-label{color:var(--text3);}
+.jdp-trigger .jdp-trigger-clear{
+  color:var(--text3);display:flex;align-items:center;justify-content:center;
+  border-radius:50%;width:18px;height:18px;flex-shrink:0;
+}
+.jdp-trigger .jdp-trigger-clear:hover{color:var(--danger);background:var(--danger-soft);}
+
+.jdp-overlay{
+  position:fixed;inset:0;z-index:520;
+  background:var(--overlay-bg);backdrop-filter:var(--blur);
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+.jdp-overlay.open{display:flex;}
+.jdp-panel{
+  width:100%;max-width:310px;
+  background:var(--glass-card);border:1px solid var(--glass-border);
+  border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  padding:14px;
+  animation:fadeSlideIn .22s cubic-bezier(0.22,1,0.36,1);
+}
+.jdp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.jdp-nav-btn{
+  width:30px;height:30px;border-radius:9px;border:1px solid var(--glass-border);
+  background:var(--glass2);color:var(--text-muted);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);
+}
+.jdp-nav-btn:hover{background:var(--primary-soft);color:var(--primary);}
+.jdp-title{font-size:13.5px;font-weight:700;color:var(--text);}
+.jdp-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;}
+.jdp-weekdays span{text-align:center;font-size:10.5px;font-weight:700;color:var(--text3);padding:4px 0;}
+.jdp-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.jdp-day{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  border-radius:9px;font-size:12.5px;color:var(--text);cursor:pointer;
+  transition:background .15s ease,color .15s ease;background:none;border:none;font-family:inherit;
+}
+.jdp-day:hover{background:var(--primary-soft);}
+.jdp-day.today{box-shadow:inset 0 0 0 1.5px var(--primary);font-weight:700;}
+.jdp-day.selected{background:var(--primary);color:#fff;font-weight:700;}
+.jdp-day.empty{cursor:default;}
+.jdp-day.empty:hover{background:none;}
+.jdp-footer{display:flex;justify-content:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--glass-border);}
+.jdp-today-btn{
+  border:none;background:none;color:var(--primary);font-family:inherit;
+  font-size:12.5px;font-weight:700;cursor:pointer;padding:5px 10px;border-radius:7px;
+}
+.jdp-today-btn:hover{background:var(--primary-soft);}
 
 /* ---------- ATTENDANCE SEGMENTED CONTROL ---------- */
 .attendance-segment{
@@ -539,8 +810,8 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 
 <!-- ================= بنر نصب به‌عنوان اپلیکیشن ================= -->
 <div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:var(--bg2,#fff);border-top:1px solid rgba(0,0,0,0.08);box-shadow:0 -4px 16px rgba(0,0,0,0.08);padding:12px 16px;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;">
-  <div style="font-size:13px;color:var(--text-muted,#555);flex:1;min-width:220px;">
-    📲 می‌خواید این سامانه رو مثل یک نرم‌افزار روی صفحه گوشیتون نصب کنید؟
+  <div style="font-size:13px;color:var(--text-muted);flex:1;min-width:220px;">
+    <svg class="ui-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> می‌خواید این سامانه رو مثل یک نرم‌افزار روی صفحه گوشیتون نصب کنید؟
   </div>
   <div style="display:flex;gap:8px;">
     <button class="btn btn-primary btn-sm" onclick="triggerAppInstall()">نصب روی گوشی</button>
@@ -550,9 +821,9 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 
 <!-- ================= LOADING SCREEN (اتصال به Firestore) ================= -->
 <div id="loadingScreen" style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;">
-  <div style="width:46px;height:46px;border-radius:50%;border:4px solid rgba(120,120,140,0.25);border-top-color:var(--primary,#4f6ef7);animation:loadingSpin 0.9s linear infinite;"></div>
-  <div style="color:var(--text-muted,#666);font-size:14px;">در حال اتصال به سرور...</div>
-  <div id="loadingErrorBox" style="display:none;color:var(--danger,#e5484d);font-size:13px;max-width:320px;text-align:center;"></div>
+  <div style="width:46px;height:46px;border-radius:50%;border:4px solid rgba(120,120,140,0.25);border-top-color:var(--primary);animation:loadingSpin 0.9s linear infinite;"></div>
+  <div style="color:var(--text-muted);font-size:14px;">در حال اتصال به سرور...</div>
+  <div id="loadingErrorBox" style="display:none;color:var(--danger);font-size:13px;max-width:320px;text-align:center;"></div>
 </div>
 <style>@keyframes loadingSpin{to{transform:rotate(360deg);}}</style>
 
@@ -560,7 +831,7 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 <div id="loginScreen" style="display:none;">
   <div class="login-box">
     <h1>سامانه حضور و غیاب مدارس نهبندان</h1>
-    <p class="sub">نسخه آنلاین (Firestore) - فاز ۸</p>
+    <p class="sub">v9.6 — سیستم طراحی یکپارچه (Group A)</p>
     <div id="loginError"></div>
     <div class="field">
       <label>نام کاربری</label>
@@ -574,10 +845,10 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 
     <div class="demo-accounts">
       <h3>حساب‌های آزمایشی (برای ورود سریع کلیک کنید)</h3>
-      <div class="demo-acc-item" onclick="quickLogin('admin','1234')"><span>مدیر اصلی سامانه</span><b>admin / 1234</b></div>
-      <div class="demo-acc-item" onclick="quickLogin('principal','1234')"><span>مدیر مدرسه</span><b>principal / 1234</b></div>
-      <div class="demo-acc-item" onclick="quickLogin('deputy','1234')"><span>معاون</span><b>deputy / 1234</b></div>
-      <div class="demo-acc-item" onclick="quickLogin('teacher','1234')"><span>دبیر</span><b>teacher / 1234</b></div>
+      <div class="demo-acc-item" onclick="quickLogin('admin','1234')"><span class="role-icon-chip"><svg class="ui-icon role-icon-admin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span>مدیر اصلی سامانه</span></span><b>admin / 1234</b></div>
+      <div class="demo-acc-item" onclick="quickLogin('principal','1234')"><span class="role-icon-chip"><svg class="ui-icon role-icon-principal" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> <span>مدیر مدرسه</span></span><b>principal / 1234</b></div>
+      <div class="demo-acc-item" onclick="quickLogin('deputy','1234')"><span class="role-icon-chip"><svg class="ui-icon role-icon-deputy" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg> <span>معاون</span></span><b>deputy / 1234</b></div>
+      <div class="demo-acc-item" onclick="quickLogin('teacher','1234')"><span class="role-icon-chip"><svg class="ui-icon role-icon-teacher" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <span>دبیر</span></span><b>teacher / 1234</b></div>
     </div>
   </div>
 </div>
@@ -589,7 +860,7 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
     <div class="sidebar" id="sidebar">
       <div class="brand">
         <h2>حضور و غیاب نهبندان</h2>
-        <span>نسخه دمو</span>
+        <span>v10.8</span>
       </div>
       <div id="navContainer"></div>
       <div class="sidebar-footer">
@@ -601,10 +872,17 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
     <div class="main-area">
       <div class="topbar">
         <div style="display:flex;align-items:center;gap:10px;">
-          <button class="hamburger" onclick="openSidebar()">☰</button>
+          <button class="hamburger" onclick="openSidebar()"><svg class="ui-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
           <h1 id="pageTitle">داشبورد</h1>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
+          <button class="gsearch-btn" onclick="openGlobalSearch()" title="جست‌وجوی سراسری">
+            <svg class="ui-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="gsearch-btn-label">جست‌وجو...</span><span class="kbd">Ctrl+K</span>
+          </button>
+          <button class="sync-indicator" id="syncIndicator" data-state="syncing" onclick="toggleSyncDetails()" title="وضعیت همگام‌سازی">
+            <span class="sync-dot" id="syncDot"></span>
+          </button>
           <div id="schoolBadge" style="display:none;align-items:center;gap:8px;"></div>
           <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تغییر تم"></button>
           <button class="btn btn-outline btn-sm mobile-user-btn" onclick="handleLogout()">خروج</button>
@@ -617,6 +895,21 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal();">
   <div class="modal-box" id="modalBox"></div>
+</div>
+
+<div class="gsearch-overlay" id="gsearchOverlay" onclick="if(event.target===this) closeGlobalSearch();">
+  <div class="gsearch-panel">
+    <div class="gsearch-input-row">
+      <svg class="ui-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="gsearchInput" placeholder="جست‌وجوی دانش‌آموز، کلاس، دبیر، مدرسه..." oninput="onGlobalSearchInput(this.value)" onkeydown="onGlobalSearchKeydown(event)">
+      <span class="gsearch-esc">Esc</span>
+    </div>
+    <div class="gsearch-results" id="gsearchResults"></div>
+  </div>
+</div>
+
+<div class="jdp-overlay" id="jdpOverlay" onclick="if(event.target===this) closeJalaliPicker();">
+  <div class="jdp-panel" id="jdpPanel"></div>
 </div>
 
 <div class="toast-container" id="toastContainer"></div>
@@ -632,7 +925,12 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
       (نیازی به Hosting نیست). مقادیر firebaseConfig نمایش داده‌شده را
       کپی کنید و در پایین همین بلوک (FIREBASE_CONFIG) جایگزین کنید.
    ۴) از تب «Firestore Database > Rules» محتوای زیر را جایگزین و Publish کنید
-      (این پروژه صرفاً برای تست داخلی چند مدرسه است، نه استفاده عمومی):
+      (این پروژه صرفاً برای تست داخلی چند مدرسه است، نه استفاده عمومی).
+      رمزهای عبور اکنون با SHA-256 هش می‌شوند (فاز ۱۰)، اما همچنان روی
+      این Rules ساده و باز تکیه دارد؛ وقتی Firebase Authentication واقعی
+      اضافه شود، حتماً به‌جای «allow read, write: if true» از
+      «allow read, write: if request.auth != null» استفاده کنید تا فقط
+      کاربران واردشده به سامانه بتوانند داده را بخوانند/بنویسند:
         rules_version = '2';
         service cloud.firestore {
           match /databases/{database}/documents {
@@ -669,6 +967,7 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
 
   window.__fsCache = {};
   window.__fsReady = false;
+  window.__fsPendingWrites = 0;
 
   function docRef(key){ return doc(db, COLLECTION, key); }
 
@@ -685,10 +984,20 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
   }
 
   // نوشتن در Firestore (fire-and-forget، ولی خطاها لاگ/توست می‌شوند)
+  // همچنین وضعیت را برای نشانگر sync گزارش می‌دهد (فاز ۱۰).
   window.__fsWrite = function(key, value){
-    setDoc(docRef(key), { items: value }).catch(e=>{
+    window.__fsPendingWrites++;
+    if(typeof window.__setSyncState === 'function') window.__setSyncState('syncing');
+    setDoc(docRef(key), { items: value }).then(()=>{
+      window.__fsPendingWrites = Math.max(0, window.__fsPendingWrites-1);
+      if(typeof window.__setSyncState === 'function' && window.__fsPendingWrites===0){
+        window.__setSyncState(navigator.onLine ? 'synced' : 'offline');
+      }
+    }).catch(e=>{
+      window.__fsPendingWrites = Math.max(0, window.__fsPendingWrites-1);
       console.error('خطا در ذخیره '+key+' در Firestore', e);
       if(typeof showToast === 'function') showToast('خطا در ذخیره‌سازی آنلاین ('+key+')');
+      if(typeof window.__setSyncState === 'function') window.__setSyncState('error');
     });
   };
 
@@ -705,7 +1014,13 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
             window.refreshAfterRemoteChange();
           }
         }
-      }, (e)=>{ console.error('خطا در دریافت تغییرات زنده '+key, e); });
+        if(typeof window.__setSyncState === 'function' && window.__fsPendingWrites===0){
+          window.__setSyncState(navigator.onLine ? 'synced' : 'offline');
+        }
+      }, (e)=>{
+        console.error('خطا در دریافت تغییرات زنده '+key, e);
+        if(typeof window.__setSyncState === 'function') window.__setSyncState('error');
+      });
     });
   }
 
@@ -716,6 +1031,7 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
       attachListeners();
       const err = document.getElementById('loadingErrorBox');
       if(err) err.style.display='none';
+      if(typeof window.__setSyncState === 'function') window.__setSyncState(navigator.onLine ? 'synced' : 'offline');
       if(typeof window.appInit === 'function') window.appInit();
     }catch(e){
       const box = document.getElementById('loadingErrorBox');
@@ -723,11 +1039,74 @@ select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(-
         box.style.display='block';
         box.textContent = 'اتصال به Firestore ناموفق بود. لطفاً تنظیمات FIREBASE_CONFIG و Security Rules را بررسی کنید و صفحه را رفرش کنید.';
       }
+      if(typeof window.__setSyncState === 'function') window.__setSyncState('error');
     }
   })();
 </script>
 
 <script>
+/* ===== لایه/بخش ===== */
+/* --- ICON LIBRARY & DESIGN SYSTEM HELPERS (Phases 9.1 - 9.6) --- */
+const ICON_SVG = {
+  dashboard: `<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`,
+  schools: `<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>`,
+  schoolAdmins: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  settings: `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>`,
+  attendance: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
+  classes: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
+  students: `<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>`,
+  teachers: `<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>`,
+  deputies: `<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/>`,
+  reports: `<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>`,
+  academicYear: `<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>`,
+  myClasses: `<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>`,
+  logout: `<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>`,
+  menu: `<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>`,
+  more: `<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>`,
+  add: `<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>`,
+  search: `<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>`,
+  warning: `<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>`,
+  check: `<polyline points="20 6 9 17 4 12"/>`,
+  close: `<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>`,
+  info: `<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>`,
+  bell: `<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>`,
+  wave: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`,
+  sun: `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`,
+  moon: `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`,
+  transfer: `<polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>`,
+  rocket: `<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>`,
+  phone: `<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>`,
+  calendar: `<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>`,
+  chart: `<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>`,
+  user: `<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>`,
+  lock: `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>`,
+  trash: `<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>`,
+  edit: `<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,
+  admin: `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
+  principal: `<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>`,
+  deputyRole: `<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/>`,
+  teacherRole: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
+  undo: `<path d="M3 7v6h6"/><path d="M3 13a9 9 0 1 0 3-7.7L3 7"/>`,
+  command: `<path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/>`,
+  arrowUpDown: `<polyline points="7 13 12 18 17 13"/><polyline points="7 11 12 6 17 11"/>`
+};
+
+function icon(name, size = 18, cls = ''){
+  const svg = ICON_SVG[name] || ICON_SVG.info;
+  return `<svg class="ui-icon ${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${svg}</svg>`;
+}
+
+function roleIcon(role, size = 18){
+  const map = {
+    superadmin: 'admin',
+    admin: 'admin',
+    principal: 'principal',
+    deputy: 'deputyRole',
+    teacher: 'teacherRole'
+  };
+  return icon(map[role] || 'user', size, 'role-icon-' + (role||'user'));
+}
+
 /* =====================================================================
    سامانه حضور و غیاب مدارس نهبندان - نسخه دمو - فاز ۱
    محدوده فاز ۱: Login، نقش‌ها، داده‌های اولیه، Navigation و
@@ -817,8 +1196,8 @@ async function triggerAppInstall(){
 
 /* نمایش هویت مدرسه (لوگو یا حرف اول نام) - فاز ۸ */
 function schoolAvatarHtml(school, size){
-  const initial = (school.name||'؟').trim().charAt(0);
-  return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:var(--primary,#4f6ef7);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:${Math.round(size*0.45)}px;flex-shrink:0;">${initial}</div>`;
+  const ic = icon('schools', Math.max(16, Math.round(size * 0.55)));
+  return `<div class="school-avatar-box" style="width:${size}px;height:${size}px;">${ic}</div>`;
 }
 // اگر تصویر لوگو لود نشد، به‌صورت نرم به حالت آواتار حرف اول برمی‌گردیم (بدون آیکون شکسته)
 function onSchoolLogoError(imgEl, schoolName, size){
@@ -832,7 +1211,7 @@ function schoolBadgeHtml(school, size){
   const imgHtml = school.logoUrl
     ? `<img src="${school.logoUrl}" alt="لوگو" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="onSchoolLogoError(this,'${nameAttr.replace(/'/g,"\\'")}',${size})">`
     : schoolAvatarHtml(school, size);
-  return `${imgHtml}<span style="font-size:12px;color:var(--text-muted,#666);">${school.name||''}</span>`;
+  return `${imgHtml}<span style="font-size:12px;color:var(--text-muted);">${school.name||''}</span>`;
 }
 
 /* ---------------------- THEME (روشن/تیره) ---------------------- */
@@ -844,7 +1223,7 @@ function applyTheme(mode){
   if(mode==='dark'){ document.documentElement.setAttribute('data-theme','dark'); }
   else{ document.documentElement.removeAttribute('data-theme'); }
   const btn = document.getElementById('themeToggleBtn');
-  if(btn) btn.textContent = mode==='dark' ? '☀️' : '🌙';
+  if(btn) btn.innerHTML = mode==='dark' ? icon('sun', 18) : icon('moon', 18);
 }
 function toggleTheme(){
   const next = getThemeMode()==='dark' ? 'light' : 'dark';
@@ -854,14 +1233,71 @@ function toggleTheme(){
 applyTheme(getThemeMode());
 
 /* ---------------------- TOAST ---------------------- */
+/* ---------------------- نشانگر وضعیت همگام‌سازی (فاز ۱۰) ----------------------
+   سبز=synced (همگام)، زرد چرخان=syncing (در حال ارسال)،
+   قرمز=offline/error (آفلاین یا خطا). با کلیک، جزئیات آخرین وضعیت نشان داده می‌شود. */
+window.__syncState = 'syncing';
+window.__syncLastSyncedAt = null;
+const SYNC_STATE_LABELS = {
+  synced:  { text: 'همگام با سرور', detail: 'همه تغییرات با موفقیت ذخیره شده‌اند.' },
+  syncing: { text: 'در حال ارسال...', detail: 'در حال ذخیره تغییرات روی Firestore.' },
+  offline: { text: 'آفلاین', detail: 'اتصال اینترنت قطع است؛ تغییرات پس از اتصال مجدد ارسال می‌شوند.' },
+  error:   { text: 'خطا در همگام‌سازی', detail: 'ارسال یا دریافت داده با خطا مواجه شد. اتصال را بررسی کنید.' }
+};
+window.__setSyncState = function(state){
+  window.__syncState = state;
+  if(state==='synced') window.__syncLastSyncedAt = Date.now();
+  const el = document.getElementById('syncIndicator');
+  if(el) el.setAttribute('data-state', state);
+  const panel = document.getElementById('syncDetailsPanel');
+  if(panel) renderSyncDetailsPanel(panel);
+};
+function syncStateTimeLabel(){
+  if(!window.__syncLastSyncedAt) return '—';
+  const diffSec = Math.round((Date.now() - window.__syncLastSyncedAt)/1000);
+  if(diffSec < 5) return 'همین الان';
+  if(diffSec < 60) return diffSec + ' ثانیه پیش';
+  const diffMin = Math.round(diffSec/60);
+  return diffMin + ' دقیقه پیش';
+}
+function renderSyncDetailsPanel(panel){
+  const s = SYNC_STATE_LABELS[window.__syncState] || SYNC_STATE_LABELS.syncing;
+  panel.innerHTML = `
+    <div class="sync-details-row"><span class="sync-dot" style="margin:0;"></span><strong>${s.text}</strong></div>
+    <div class="sync-details-row" style="color:var(--text-muted);font-size:12.5px;">${s.detail}</div>
+    <div class="sync-details-row"><span class="sync-details-label">آخرین همگام‌سازی:</span><span>${syncStateTimeLabel()}</span></div>
+  `;
+  panel.querySelector('.sync-dot').style.background = {synced:'var(--success)', syncing:'var(--warning)', offline:'var(--danger)', error:'var(--danger)'}[window.__syncState] || 'var(--gray-400)';
+}
+function toggleSyncDetails(){
+  let panel = document.getElementById('syncDetailsPanel');
+  if(panel){ panel.remove(); document.removeEventListener('click', closeSyncDetailsOnOutsideClick, true); return; }
+  panel = document.createElement('div');
+  panel.className = 'sync-details-panel';
+  panel.id = 'syncDetailsPanel';
+  document.body.appendChild(panel);
+  renderSyncDetailsPanel(panel);
+  setTimeout(()=>document.addEventListener('click', closeSyncDetailsOnOutsideClick, true), 0);
+}
+function closeSyncDetailsOnOutsideClick(e){
+  const panel = document.getElementById('syncDetailsPanel');
+  const btn = document.getElementById('syncIndicator');
+  if(panel && !panel.contains(e.target) && e.target!==btn && !btn.contains(e.target)){
+    panel.remove();
+    document.removeEventListener('click', closeSyncDetailsOnOutsideClick, true);
+  }
+}
+window.addEventListener('online', ()=>{ if(window.__fsPendingWrites===0) window.__setSyncState('synced'); });
+window.addEventListener('offline', ()=>{ window.__setSyncState('offline'); });
+
 function showToast(message, type){
   type = type || 'success';
   const container = document.getElementById('toastContainer');
   if(!container) return;
-  const icon = type==='success' ? '✓' : type==='error' ? '✕' : 'i';
+  const ic = type==='success' ? icon('check', 16) : type==='error' ? icon('close', 16) : icon('info', 16);
   const t = document.createElement('div');
   t.className = 'toast '+type;
-  t.innerHTML = `<span class="toast-icon">${icon}</span><span>${message}</span>`;
+  t.innerHTML = `<span class="toast-icon">${ic}</span><span>${message}</span>`;
   container.appendChild(t);
   requestAnimationFrame(()=> requestAnimationFrame(()=> t.classList.add('show')));
   setTimeout(()=>{
@@ -870,8 +1306,258 @@ function showToast(message, type){
   }, 2800);
 }
 
+/* ---------------------- UNDO TOAST (Phase 10.3) ----------------------
+   یک toast با دکمه «بازگردانی» و نوار پیشرفت ۵ ثانیه‌ای. اگر کاربر قبل
+   از اتمام زمان روی «بازگردانی» بزند، undoFn صدا زده می‌شود و عملیات
+   حذف خنثی می‌شود. در غیر این صورت toast خودش محو می‌شود (حذف قبلاً
+   به‌صورت optimistic انجام شده است). */
+const UNDO_DURATION_MS = 5000;
+function showUndoToast(message, undoFn){
+  const container = document.getElementById('toastContainer');
+  if(!container) return;
+  const t = document.createElement('div');
+  t.className = 'toast undo-toast';
+  const undoId = 'undo-' + Date.now().toString(36) + Math.floor(Math.random()*1000);
+  t.innerHTML = `
+    <span class="toast-icon">${icon('trash', 16)}</span>
+    <span class="undo-toast-msg">${message}</span>
+    <button type="button" class="undo-toast-btn" id="${undoId}">${icon('undo', 14)}بازگردانی</button>
+    <div class="undo-toast-bar"><div class="undo-toast-bar-fill" id="${undoId}-bar"></div></div>
+  `;
+  container.appendChild(t);
+  requestAnimationFrame(()=> requestAnimationFrame(()=> t.classList.add('show')));
+
+  let undone = false;
+  const finish = ()=>{
+    t.classList.remove('show');
+    setTimeout(()=> t.remove(), 260);
+  };
+  const timer = setTimeout(()=>{
+    if(!undone) finish();
+  }, UNDO_DURATION_MS);
+
+  const bar = t.querySelector(`#${undoId}-bar`);
+  if(bar){
+    requestAnimationFrame(()=>{
+      bar.style.transition = `width ${UNDO_DURATION_MS}ms linear`;
+      bar.style.width = '0%';
+    });
+  }
+
+  const btn = t.querySelector(`#${undoId}`);
+  if(btn){
+    btn.onclick = ()=>{
+      if(undone) return;
+      undone = true;
+      clearTimeout(timer);
+      finish();
+      undoFn();
+    };
+  }
+}
+
+/* ---------------------- GLOBAL SEARCH (Cmd+K) (Phase 10.1) ----------------------
+   جست‌وجوی سراسری بین دانش‌آموز، کلاس، دبیر، معاون و (برای superadmin) مدرسه/
+   مدیر مدرسه. با Ctrl+K یا Cmd+K باز می‌شود، با Esc بسته می‌شود. */
+let __gsearchActiveIndex = -1;
+let __gsearchResultsCache = [];
+
+function openGlobalSearch(){
+  const cu = lsGet(LS_KEYS.CURRENT_USER, null);
+  if(!cu) return;
+  const ov = document.getElementById('gsearchOverlay');
+  ov.classList.add('open');
+  const input = document.getElementById('gsearchInput');
+  input.value = '';
+  renderGlobalSearchResults([]);
+  setTimeout(()=> input.focus(), 30);
+}
+function closeGlobalSearch(){
+  document.getElementById('gsearchOverlay').classList.remove('open');
+  __gsearchActiveIndex = -1;
+}
+function toggleGlobalSearch(){
+  const ov = document.getElementById('gsearchOverlay');
+  if(ov.classList.contains('open')) closeGlobalSearch();
+  else openGlobalSearch();
+}
+
+document.addEventListener('keydown', function(e){
+  const isK = e.key === 'k' || e.key === 'K';
+  if((e.ctrlKey || e.metaKey) && isK){
+    e.preventDefault();
+    const cu = lsGet(LS_KEYS.CURRENT_USER, null);
+    if(cu) toggleGlobalSearch();
+    return;
+  }
+  if(e.key === 'Escape'){
+    const ov = document.getElementById('gsearchOverlay');
+    if(ov && ov.classList.contains('open')) closeGlobalSearch();
+    const jov = document.getElementById('jdpOverlay');
+    if(jov && jov.classList.contains('open')) closeJalaliPicker();
+  }
+});
+
+function onGlobalSearchKeydown(e){
+  const results = __gsearchResultsCache;
+  if(e.key === 'ArrowDown'){
+    e.preventDefault();
+    if(!results.length) return;
+    __gsearchActiveIndex = Math.min(__gsearchActiveIndex+1, results.length-1);
+    highlightGlobalSearchActive();
+  } else if(e.key === 'ArrowUp'){
+    e.preventDefault();
+    if(!results.length) return;
+    __gsearchActiveIndex = Math.max(__gsearchActiveIndex-1, 0);
+    highlightGlobalSearchActive();
+  } else if(e.key === 'Enter'){
+    e.preventDefault();
+    const idx = __gsearchActiveIndex >= 0 ? __gsearchActiveIndex : 0;
+    if(results[idx]) selectGlobalSearchResult(idx);
+  }
+}
+function highlightGlobalSearchActive(){
+  const container = document.getElementById('gsearchResults');
+  if(!container) return;
+  container.querySelectorAll('.gsearch-item').forEach((el, i)=>{
+    el.classList.toggle('active', i === __gsearchActiveIndex);
+  });
+  const activeEl = container.querySelector('.gsearch-item.active');
+  if(activeEl) activeEl.scrollIntoView({block:'nearest'});
+}
+
+function onGlobalSearchInput(query){
+  const cu = lsGet(LS_KEYS.CURRENT_USER, null);
+  if(!cu) return;
+  const results = globalSearchData(cu, query);
+  renderGlobalSearchResults(results, query);
+}
+
+function globalSearchData(cu, query){
+  query = (query||'').trim().toLowerCase();
+  if(!query) return [];
+  const results = [];
+
+  if(cu.role === 'superadmin'){
+    const schools = lsGet(LS_KEYS.SCHOOLS, []);
+    schools.forEach(s=>{
+      if((s.name||'').toLowerCase().includes(query)){
+        results.push({ type:'school', icon:'schools', title:s.name, sub:'مدرسه', page:'schools' });
+      }
+    });
+    const admins = lsGet(LS_KEYS.USERS, []).filter(u=>u.role==='principal');
+    admins.forEach(a=>{
+      const full = `${a.name||''} ${a.family||''}`.trim();
+      if(full.toLowerCase().includes(query)){
+        const school = schools.find(s=>s.id===a.schoolId);
+        results.push({ type:'schoolAdmin', icon:'schoolAdmins', title:full, sub:'مدیر مدرسه'+(school?' — '+school.name:''), page:'schoolAdmins' });
+      }
+    });
+    return results.slice(0, 30);
+  }
+
+  const classes = getVisibleClasses(cu);
+  const classMap = {};
+  classes.forEach(c=>{ classMap[c.id] = c.name; });
+
+  classes.forEach(c=>{
+    if((c.name||'').toLowerCase().includes(query)){
+      results.push({ type:'class', icon:'classes', title:c.name, sub:'کلاس', page:'classes' });
+    }
+  });
+
+  const classIds = new Set(classes.map(c=>c.id));
+  const students = lsGet(LS_KEYS.STUDENTS, []).filter(s=>s.schoolId===cu.schoolId && classIds.has(s.classId));
+  students.forEach(s=>{
+    const full = `${s.firstName||''} ${s.lastName||''}`.trim();
+    if(full.toLowerCase().includes(query) || (s.studentCode||'').toLowerCase().includes(query)){
+      results.push({ type:'student', icon:'students', title:full, sub:'دانش‌آموز — '+(classMap[s.classId]||'—'), page:'students' });
+    }
+  });
+
+  if(cu.role === 'principal' || cu.role === 'deputy'){
+    const teachers = lsGet(LS_KEYS.USERS, []).filter(u=>u.role==='teacher' && u.schoolId===cu.schoolId);
+    teachers.forEach(t=>{
+      const full = `${t.name||''} ${t.family||''}`.trim();
+      if(full.toLowerCase().includes(query)){
+        results.push({ type:'teacher', icon:'teachers', title:full, sub:'دبیر', page:'teachers' });
+      }
+    });
+  }
+  if(cu.role === 'principal'){
+    const deputies = lsGet(LS_KEYS.USERS, []).filter(u=>u.role==='deputy' && u.schoolId===cu.schoolId);
+    deputies.forEach(d=>{
+      const full = `${d.name||''} ${d.family||''}`.trim();
+      if(full.toLowerCase().includes(query)){
+        results.push({ type:'deputy', icon:'deputies', title:full, sub:'معاون', page:'deputies' });
+      }
+    });
+  }
+
+  return results.slice(0, 30);
+}
+
+const GSEARCH_GROUP_LABELS = {
+  school:'مدارس', schoolAdmin:'مدیران مدارس', class:'کلاس‌ها',
+  student:'دانش‌آموزان', teacher:'دبیران', deputy:'معاونان'
+};
+
+function renderGlobalSearchResults(results, query){
+  __gsearchResultsCache = results;
+  __gsearchActiveIndex = results.length ? 0 : -1;
+  const container = document.getElementById('gsearchResults');
+  if(!container) return;
+
+  if(!query){
+    container.innerHTML = `<div class="gsearch-empty">برای جست‌وجو بین دانش‌آموزان، کلاس‌ها، دبیران و معاونان شروع به تایپ کنید.</div>`;
+    return;
+  }
+  if(!results.length){
+    container.innerHTML = `<div class="gsearch-empty">نتیجه‌ای یافت نشد.</div>`;
+    return;
+  }
+
+  const groups = {};
+  results.forEach((r, idx)=>{
+    r.__idx = idx;
+    if(!groups[r.type]) groups[r.type] = [];
+    groups[r.type].push(r);
+  });
+
+  let html = '';
+  Object.keys(groups).forEach(type=>{
+    html += `<div class="gsearch-group-label">${GSEARCH_GROUP_LABELS[type] || type}</div>`;
+    groups[type].forEach(r=>{
+      html += `<div class="gsearch-item${r.__idx===0?' active':''}" onclick="selectGlobalSearchResult(${r.__idx})">
+        <div class="gsearch-item-icon">${icon(r.icon, 16)}</div>
+        <div class="gsearch-item-text">
+          <div class="gsearch-item-title">${r.title}</div>
+          <div class="gsearch-item-sub">${r.sub}</div>
+        </div>
+      </div>`;
+    });
+  });
+  container.innerHTML = html;
+}
+
+function selectGlobalSearchResult(idx){
+  const r = __gsearchResultsCache[idx];
+  if(!r) return;
+  closeGlobalSearch();
+  goPage(r.page);
+}
+
 /* ---------------------- EMPTY STATE HELPER ---------------------- */
-const EMPTY_STATE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l3-4h12l3 4"/><path d="M3 7v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M3 7h18"/><path d="M9 12h6"/></svg>`;
+const EMPTY_STATE_SVG = `<svg viewBox="0 0 140 110" width="120" height="95" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="70" cy="55" r="42" fill="var(--primary-soft)" opacity="0.6"/>
+  <rect x="35" y="32" width="70" height="52" rx="8" stroke="currentColor" stroke-width="2" fill="var(--card)"/>
+  <path d="M48 48h44M48 60h28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="102" cy="74" r="14" fill="var(--card)" stroke="currentColor" stroke-width="2"/>
+  <path d="M98 74h8M102 70v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="28" cy="36" r="3" fill="var(--primary)" opacity="0.5"/>
+  <circle cx="112" cy="28" r="4" fill="var(--accent, #06b6d4)" opacity="0.5"/>
+  <circle cx="40" cy="90" r="2.5" fill="currentColor" opacity="0.4"/>
+</svg>`;
 function emptyStateHtml(icon, text, actionLabel, actionOnclick){
   return `<div class="empty-state">
     <div class="empty-icon">${icon || EMPTY_STATE_SVG}</div>
@@ -912,22 +1598,80 @@ function countDraftStatuses(draft, skipKeys){
   return { present, absent };
 }
 
-/* ---------------------- تاریخ شمسی (Jalali) ---------------------- */
+/* ---------------------- تاریخ شمسی (Jalali) ----------------------
+   پیاده‌سازی الگوریتم دقیق تقویم جلالی (بر پایه jalaali-js / Kazimierz
+   Borkowski) که جایگزین نسخهٔ قبلی شد؛ نسخهٔ قبلی در مرز نوروز بعضی
+   سال‌های کبیسه (مثلاً ۲۰۲۴-۰۳-۲۰) یک روز اشتباه محاسبه می‌کرد. */
+function __jDiv(a, b){ return Math.trunc(a / b); }
+function __jMod(a, b){ return a - Math.trunc(a / b) * b; }
+const __J_BREAKS = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+function __jalCal(jy){
+  const bl = __J_BREAKS.length;
+  let gy = jy + 621, leapJ = -14, jp = __J_BREAKS[0], jm, jump = 0, leap, n, i;
+  for(i = 1; i < bl; i += 1){
+    jm = __J_BREAKS[i];
+    jump = jm - jp;
+    if(jy < jm) break;
+    leapJ = leapJ + __jDiv(jump, 33) * 8 + __jDiv(__jMod(jump, 33), 4);
+    jp = jm;
+  }
+  n = jy - jp;
+  leapJ = leapJ + __jDiv(n, 33) * 8 + __jDiv(__jMod(n, 33) + 3, 4);
+  if(__jMod(jump, 33) === 4 && jump - n === 4) leapJ += 1;
+  const leapG = __jDiv(gy, 4) - __jDiv((__jDiv(gy, 100) + 1) * 3, 4) - 150;
+  const march = 20 + leapJ - leapG;
+  if(jump - n < 6) n = n - jump + __jDiv(jump, 33) * 33;
+  leap = __jMod(__jMod(n + 1, 33) - 1, 4);
+  if(leap === -1) leap = 4;
+  return { leap, gy, march };
+}
+function __g2d(gy, gm, gd){
+  let d = __jDiv((gy + __jDiv(gm - 8, 6) + 100100) * 1461, 4) + __jDiv(153 * __jMod(gm + 9, 12) + 2, 5) + gd - 34840408;
+  d = d - __jDiv(__jDiv(gy + 100100 + __jDiv(gm - 8, 6), 100) * 3, 4) + 752;
+  return d;
+}
+function __j2d(jy, jm, jd){
+  const r = __jalCal(jy);
+  return __g2d(r.gy, 3, r.march) + (jm - 1) * 31 - __jDiv(jm, 7) * (jm - 7) + jd - 1;
+}
+function __d2g(jdn){
+  let j = 4 * jdn + 139361631;
+  j = j + __jDiv(__jDiv(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
+  const i = __jDiv(__jMod(j, 1461), 4) * 5 + 308;
+  const gd = __jDiv(__jMod(i, 153), 5) + 1;
+  const gm = __jMod(__jDiv(i, 153), 12) + 1;
+  const gy = __jDiv(j, 1461) - 100100 + __jDiv(8 - gm, 6);
+  return { gy, gm, gd };
+}
+function __d2j(jdn){
+  const gy = __d2g(jdn).gy;
+  let jy = gy - 621;
+  const r = __jalCal(jy);
+  const jdn1f = __g2d(gy, 3, r.march);
+  let jd, jm, k = jdn - jdn1f;
+  if(k >= 0){
+    if(k <= 185){
+      jm = 1 + __jDiv(k, 31);
+      jd = __jMod(k, 31) + 1;
+      return { jy, jm, jd };
+    }
+    k -= 186;
+  } else {
+    jy -= 1;
+    k += 179;
+    if(r.leap === 1) k += 1;
+  }
+  jm = 7 + __jDiv(k, 30);
+  jd = __jMod(k, 30) + 1;
+  return { jy, jm, jd };
+}
 function gregorianToJalali(gy, gm, gd){
-  const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
-  let jy = (gy<=1600)?0:979;
-  gy -= (gy<=1600)?621:1600;
-  const gy2 = (gm>2)?(gy+1):gy;
-  let days = (365*gy)+(Math.floor((gy2+3)/4))-(Math.floor((gy2+99)/100))+(Math.floor((gy2+399)/400))-80+gd+g_d_m[gm-1];
-  jy += 33*Math.floor(days/12053);
-  days %= 12053;
-  jy += 4*Math.floor(days/1461);
-  days %= 1461;
-  jy += Math.floor((days-1)/365);
-  if(days>365) days=(days-1)%365;
-  const jm = (days<186)?1+Math.floor(days/31):7+Math.floor((days-186)/30);
-  const jd = 1+((days<186)?(days%31):((days-186)%30));
-  return [jy, jm, jd];
+  const r = __d2j(__g2d(gy, gm, gd));
+  return [r.jy, r.jm, r.jd];
+}
+function jalaliToGregorian(jy, jm, jd){
+  const r = __d2g(__j2d(jy, jm, jd));
+  return [r.gy, r.gm, r.gd];
 }
 const JALALI_MONTHS = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 const JALALI_WEEKDAYS = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
@@ -936,31 +1680,155 @@ function jalaliTodayReadable(){
   const [jy,jm,jd] = gregorianToJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
   return `${JALALI_WEEKDAYS[d.getDay()]} ${jd} ${JALALI_MONTHS[jm-1]} ${jy}`;
 }
+function isoFromJalali(jy, jm, jd){
+  const [gy,gm,gd] = jalaliToGregorian(jy, jm, jd);
+  return gy+'-'+String(gm).padStart(2,'0')+'-'+String(gd).padStart(2,'0');
+}
+function jalaliFromIso(isoStr){
+  if(!isoStr) return null;
+  const parts = isoStr.split('-').map(Number);
+  if(parts.length!==3 || parts.some(isNaN)) return null;
+  const [gy,gm,gd] = parts;
+  return gregorianToJalali(gy, gm, gd);
+}
+function jalaliMonthLength(jy, jm){
+  const nextJm = jm===12 ? 1 : jm+1;
+  const nextJy = jm===12 ? jy+1 : jy;
+  return __j2d(nextJy, nextJm, 1) - __j2d(jy, jm, 1);
+}
+function jalaliDateLabel(isoStr){
+  const j = jalaliFromIso(isoStr);
+  if(!j) return null;
+  const [jy,jm,jd] = j;
+  return `${jd} ${JALALI_MONTHS[jm-1]} ${jy}`;
+}
+
+/* ---------------------- JALALI GRAPHICAL DATE PICKER (Phase 10.7) ----------------------
+   جایگزین input[type=date] مرورگر با یک تقویم گرافیکی شمسی سفارشی. مقدار
+   واقعی همچنان به‌صورت ISO میلادی (YYYY-MM-DD) در یک input مخفی نگه داشته
+   می‌شود تا با منطق موجود (فیلترها، ثبت حضور و غیاب) سازگار بماند. */
+function jalaliDatePickerHtml(id, isoValue, onChangeFnName, opts){
+  opts = opts || {};
+  const label = jalaliDateLabel(isoValue);
+  const placeholder = opts.placeholder || 'انتخاب تاریخ';
+  return `
+    <input type="hidden" id="${id}" value="${isoValue||''}">
+    <button type="button" class="jdp-trigger ${label?'':'placeholder'}" id="${id}_trigger"
+      onclick="openJalaliPicker('${id}', ${onChangeFnName?`'${onChangeFnName}'`:'null'})">
+      <span class="jdp-trigger-icon">${icon('calendar', 16)}</span>
+      <span class="jdp-trigger-label">${label || placeholder}</span>
+    </button>
+  `;
+}
+
+let __jdpState = null;
+function openJalaliPicker(inputId, onChangeFnName){
+  const hiddenInput = document.getElementById(inputId);
+  if(!hiddenInput) return;
+  const j = jalaliFromIso(hiddenInput.value) || gregorianToJalali(new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate());
+  __jdpState = {
+    inputId, onChangeFnName,
+    viewYear: j[0], viewMonth: j[1],
+    selectedYear: hiddenInput.value ? j[0] : null,
+    selectedMonth: hiddenInput.value ? j[1] : null,
+    selectedDay: hiddenInput.value ? j[2] : null
+  };
+  const trigger = document.getElementById(inputId+'_trigger');
+  if(trigger) trigger.classList.add('open');
+  document.getElementById('jdpOverlay').classList.add('open');
+  jdpRender();
+}
+function closeJalaliPicker(){
+  if(__jdpState){
+    const trigger = document.getElementById(__jdpState.inputId+'_trigger');
+    if(trigger) trigger.classList.remove('open');
+  }
+  document.getElementById('jdpOverlay').classList.remove('open');
+  __jdpState = null;
+}
+function jdpNavigate(delta){
+  if(!__jdpState) return;
+  __jdpState.viewMonth += delta;
+  if(__jdpState.viewMonth > 12){ __jdpState.viewMonth = 1; __jdpState.viewYear++; }
+  if(__jdpState.viewMonth < 1){ __jdpState.viewMonth = 12; __jdpState.viewYear--; }
+  jdpRender();
+}
+function jdpSelectDay(jy, jm, jd){
+  if(!__jdpState) return;
+  const iso = isoFromJalali(jy, jm, jd);
+  const hiddenInput = document.getElementById(__jdpState.inputId);
+  if(hiddenInput) hiddenInput.value = iso;
+  const trigger = document.getElementById(__jdpState.inputId+'_trigger');
+  if(trigger){
+    trigger.classList.remove('placeholder');
+    const labelEl = trigger.querySelector('.jdp-trigger-label');
+    if(labelEl) labelEl.textContent = `${jd} ${JALALI_MONTHS[jm-1]} ${jy}`;
+  }
+  const onChangeFnName = __jdpState.onChangeFnName;
+  closeJalaliPicker();
+  if(onChangeFnName && typeof window[onChangeFnName] === 'function') window[onChangeFnName](iso);
+}
+function jdpToday(){
+  const d = new Date();
+  const [jy,jm,jd] = gregorianToJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+  jdpSelectDay(jy, jm, jd);
+}
+function jdpRender(){
+  if(!__jdpState) return;
+  const { viewYear, viewMonth, selectedYear, selectedMonth, selectedDay } = __jdpState;
+  const d = new Date();
+  const [todayJy, todayJm, todayJd] = gregorianToJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+
+  const [gy1, gm1, gd1] = jalaliToGregorian(viewYear, viewMonth, 1);
+  const firstDow = new Date(Date.UTC(gy1, gm1-1, gd1)).getUTCDay(); // 0=یکشنبه ... 6=شنبه
+  const leadOffset = (firstDow + 1) % 7; // ستون اول = شنبه
+  const monthLen = jalaliMonthLength(viewYear, viewMonth);
+
+  const weekHeaders = ['ش','ی','د','س','چ','پ','ج'];
+  let cells = '';
+  for(let i=0;i<leadOffset;i++) cells += `<button type="button" class="jdp-day empty" disabled></button>`;
+  for(let day=1; day<=monthLen; day++){
+    const isToday = viewYear===todayJy && viewMonth===todayJm && day===todayJd;
+    const isSelected = viewYear===selectedYear && viewMonth===selectedMonth && day===selectedDay;
+    cells += `<button type="button" class="jdp-day${isToday?' today':''}${isSelected?' selected':''}" onclick="jdpSelectDay(${viewYear},${viewMonth},${day})">${day}</button>`;
+  }
+
+  document.getElementById('jdpPanel').innerHTML = `
+    <div class="jdp-head">
+      <button type="button" class="jdp-nav-btn" onclick="jdpNavigate(1)" title="ماه بعد"><svg class="ui-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="jdp-title">${JALALI_MONTHS[viewMonth-1]} ${viewYear}</div>
+      <button type="button" class="jdp-nav-btn" onclick="jdpNavigate(-1)" title="ماه قبل"><svg class="ui-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <div class="jdp-weekdays">${weekHeaders.map(w=>`<span>${w}</span>`).join('')}</div>
+    <div class="jdp-days">${cells}</div>
+    <div class="jdp-footer"><button type="button" class="jdp-today-btn" onclick="jdpToday()">امروز</button></div>
+  `;
+}
 
 /* ---------------------- WELCOME CARD / HERO STAT ---------------------- */
 function welcomeCardHtml(cu){
   return `<div class="welcome-card">
     <div>
-      <h3>سلام، ${cu.name||''} ${cu.family||''} 👋</h3>
-      <div class="wc-sub">${ROLE_LABELS[cu.role]||cu.role}</div>
+      <h3 class="type-section-title" style="display:flex;align-items:center;gap:8px;">سلام، ${cu.name||''} ${cu.family||''} ${icon('wave', 22, 'wave-icon')}</h3>
+      <div class="wc-sub type-subtitle" style="display:flex;align-items:center;gap:6px;margin-top:4px;">${roleIcon(cu.role, 16)} ${ROLE_LABELS[cu.role]||cu.role}</div>
     </div>
-    <div class="wc-date">📅 امروز ${jalaliTodayReadable()}</div>
+    <div class="wc-date type-body" style="display:flex;align-items:center;gap:6px;">${icon('calendar', 16)} امروز ${jalaliTodayReadable()}</div>
   </div>`;
 }
-function heroStatHtml(icon, number, label, tone){
+function heroStatHtml(iconName, number, label, tone){
   return `<div class="hero-stat ${tone?('tone-'+tone):''}">
     <div>
       <div class="hero-num">${number}</div>
-      <div class="hero-label">${label}</div>
+      <div class="hero-label type-caption">${label}</div>
     </div>
-    <div class="hero-icon">${icon}</div>
+    <div class="hero-icon">${icon(iconName, 26)}</div>
   </div>`;
 }
 
 /* ---------------------- جستجوی سریع جدول‌ها ---------------------- */
 function tableSearchHtml(tableId, placeholder){
   return `<div class="table-search">
-    <span class="table-search-icon">🔍</span>
+    <span class="table-search-icon">${icon("search", 16)}</span>
     <input type="text" placeholder="${placeholder||'جستجو...'}" oninput="filterTableRows('${tableId}', this.value)">
   </div>`;
 }
@@ -1011,7 +1879,53 @@ function withBtnSpinner(btnEl, fn){
 }
 
 /* ---------------------- SKELETON ---------------------- */
-function skeletonPageHtml(){
+/* ===== لایه/بخش ===== */
+/* --- SKELETON LOADING (Phase 9.5) --- */
+function skeletonPageHtml(key){
+  if(key === 'dashboard'){
+    return `
+      <div class="skeleton-cards">
+        <div class="skeleton-block" style="height:78px;"></div>
+        <div class="skeleton-block" style="height:78px;"></div>
+        <div class="skeleton-block" style="height:78px;"></div>
+        <div class="skeleton-block" style="height:78px;"></div>
+      </div>
+      <div class="skeleton-panel">
+        <div class="skeleton-block" style="height:20px;width:30%;margin-bottom:16px;"></div>
+        <div class="skeleton-block" style="height:14px;width:95%;"></div>
+        <div class="skeleton-block" style="height:14px;width:85%;"></div>
+        <div class="skeleton-block" style="height:14px;width:60%;"></div>
+      </div>
+    `;
+  }
+  if(key === 'attendance' || key === 'students' || key === 'teachers' || key === 'deputies' || key === 'schools' || key === 'schoolAdmins' || key === 'classes' || key === 'myClasses' || key === 'academicYear' || key === 'reports'){
+    return `
+      <div class="skeleton-panel" style="margin-bottom:16px;">
+        <div style="display:flex;gap:12px;margin-bottom:14px;">
+          <div class="skeleton-block" style="height:36px;width:200px;margin:0;"></div>
+          <div class="skeleton-block" style="height:36px;width:130px;margin:0;"></div>
+        </div>
+        <div class="skeleton-block" style="height:28px;width:100%;margin-bottom:10px;"></div>
+        <div class="skeleton-block" style="height:44px;width:100%;margin-bottom:8px;"></div>
+        <div class="skeleton-block" style="height:44px;width:100%;margin-bottom:8px;"></div>
+        <div class="skeleton-block" style="height:44px;width:100%;margin-bottom:8px;"></div>
+        <div class="skeleton-block" style="height:44px;width:100%;"></div>
+      </div>
+    `;
+  }
+  if(key === 'settings'){
+    return `
+      <div class="skeleton-panel" style="margin-bottom:16px;">
+        <div class="skeleton-block" style="height:20px;width:120px;margin-bottom:16px;"></div>
+        <div class="skeleton-block" style="height:40px;width:100%;margin-bottom:12px;"></div>
+        <div class="skeleton-block" style="height:40px;width:100%;margin-bottom:12px;"></div>
+      </div>
+      <div class="skeleton-panel">
+        <div class="skeleton-block" style="height:20px;width:120px;margin-bottom:16px;"></div>
+        <div class="skeleton-block" style="height:40px;width:100%;"></div>
+      </div>
+    `;
+  }
   return `
     <div class="skeleton-cards">
       <div class="skeleton-block"></div><div class="skeleton-block"></div><div class="skeleton-block"></div>
@@ -1038,7 +1952,7 @@ function closeModal(){
 function confirmDelete(message, onConfirmJs){
   openModal('تأیید حذف', `
     <div style="display:flex;gap:12px;align-items:flex-start;">
-      <div style="width:38px;height:38px;border-radius:50%;background:var(--danger-soft);color:var(--danger);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">⚠</div>
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--danger-soft);color:var(--danger);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">${icon("warning", 18)}</div>
       <p style="font-size:13.5px;color:var(--text-muted);line-height:1.8;padding-top:6px;">${message}</p>
     </div>
     <div class="modal-actions">
@@ -1055,7 +1969,7 @@ function showFormError(msg){
 }
 
 /* ---------------------- SEED DATA ---------------------- */
-function seedIfEmpty(){
+async function seedIfEmpty(){
   if(window.__fsCache && window.__fsCache[LS_KEYS.SCHOOLS] !== undefined) return; // already seeded, don't overwrite
 
   const schoolId = 'sch-1';
@@ -1064,11 +1978,12 @@ function seedIfEmpty(){
     { id: schoolId, name: 'دبیرستان نمونه نهبندان', address:'نهبندان', archived:false }
   ];
 
+  const seedHash = await hashPassword('1234');
   const users = [
-    { id:'u-admin',     username:'admin',     password:'1234', role:'superadmin', name:'مدیر', family:'اصلی سامانه', schoolId:null, active:true },
-    { id:'u-principal', username:'principal', password:'1234', role:'principal',  name:'مدیر', family:'مدرسه',        schoolId:schoolId, active:true },
-    { id:'u-deputy',    username:'deputy',    password:'1234', role:'deputy',     name:'معاون', family:'مدرسه',       schoolId:schoolId, active:true },
-    { id:'u-teacher',   username:'teacher',   password:'1234', role:'teacher',    name:'علی',  family:'رضایی',        schoolId:schoolId, allowedClassIds:['c-1','c-2'], active:true }
+    { id:'u-admin',     username:'admin',     password:seedHash, role:'superadmin', name:'مدیر', family:'اصلی سامانه', schoolId:null, active:true },
+    { id:'u-principal', username:'principal', password:seedHash, role:'principal',  name:'مدیر', family:'مدرسه',        schoolId:schoolId, active:true },
+    { id:'u-deputy',    username:'deputy',    password:seedHash, role:'deputy',     name:'معاون', family:'مدرسه',       schoolId:schoolId, active:true },
+    { id:'u-teacher',   username:'teacher',   password:seedHash, role:'teacher',    name:'علی',  family:'رضایی',        schoolId:schoolId, allowedClassIds:['c-1','c-2'], active:true }
   ];
 
   const academicYearId = 'ay-1';
@@ -1170,6 +2085,27 @@ function getActiveAcademicYear(schoolId){
   return lsGet(LS_KEYS.ACADEMIC_YEARS, []).find(y=>y.schoolId===schoolId && y.active) || null;
 }
 
+/* ---------------------- امنیت: هش کردن رمز عبور (فاز ۱۰) ----------------------
+   رمزها با SHA-256 (Web Crypto API) هش می‌شوند و به‌صورت متن رمزنگاری‌شده
+   (۶۴ کاراکتر hex) ذخیره می‌گردند. برای سازگاری با داده‌های قدیمی که رمز
+   را به‌صورت متن‌ساده ذخیره کرده بودند، اگر مقدار ذخیره‌شده هش به‌نظر نرسد
+   (looksHashed=false) با متن ساده مقایسه و در صورت درست بودن، بلافاصله
+   به‌صورت هش‌شده بازنویسی (migrate) می‌شود. */
+async function hashPassword(pw){
+  const enc = new TextEncoder().encode(String(pw));
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function looksHashed(pw){
+  return typeof pw === 'string' && /^[0-9a-f]{64}$/.test(pw);
+}
+async function verifyPassword(inputPlain, storedValue){
+  if(looksHashed(storedValue)){
+    return (await hashPassword(inputPlain)) === storedValue;
+  }
+  return inputPlain === storedValue; // داده قدیمی متن‌ساده
+}
+
 /* ---------------------- AUTH ---------------------- */
 function quickLogin(u,p){
   document.getElementById('loginUsername').value = u;
@@ -1177,7 +2113,7 @@ function quickLogin(u,p){
   handleLogin();
 }
 
-function handleLogin(){
+async function handleLogin(){
   const username = document.getElementById('loginUsername').value.trim();
   const password = document.getElementById('loginPassword').value;
   const errBox = document.getElementById('loginError');
@@ -1190,12 +2126,20 @@ function handleLogin(){
   }
 
   const users = lsGet(LS_KEYS.USERS, []);
-  const user = users.find(u=>u.username===username && u.password===password);
+  const candidate = users.find(u=>u.username===username);
+  const ok = candidate ? await verifyPassword(password, candidate.password) : false;
+  const user = ok ? candidate : null;
 
   if(!user){
     errBox.textContent = 'نام کاربری یا رمز عبور اشتباه است.';
     errBox.style.display='block';
     return;
+  }
+
+  // مهاجرت خودکار رمزهای قدیمی متن‌ساده به هش، بعد از ورود موفق
+  if(!looksHashed(user.password)){
+    user.password = await hashPassword(password);
+    lsSet(LS_KEYS.USERS, users);
   }
   if(user.active===false){
     errBox.textContent = 'این حساب غیرفعال شده است.';
@@ -1222,36 +2166,38 @@ function handleLogout(){
 }
 
 /* ---------------------- NAV CONFIG ---------------------- */
+/* ===== لایه/بخش ===== */
+/* --- NAV CONFIG (Phase 9.1) --- */
 const NAV_CONFIG = {
   superadmin: [
-    {key:'dashboard', label:'داشبورد', icon:'🏠'},
-    {key:'schools', label:'مدارس', icon:'🏫'},
-    {key:'schoolAdmins', label:'مدیران مدارس', icon:'👤'},
-    {key:'settings', label:'تنظیمات', icon:'⚙️'}
+    {key:'dashboard', label:'داشبورد', icon:'dashboard'},
+    {key:'schools', label:'مدارس', icon:'schools'},
+    {key:'schoolAdmins', label:'مدیران مدارس', icon:'schoolAdmins'},
+    {key:'settings', label:'تنظیمات', icon:'settings'}
   ],
   principal: [
-    {key:'dashboard', label:'داشبورد', icon:'🏠'},
-    {key:'attendance', label:'حضور و غیاب', icon:'✅'},
-    {key:'classes', label:'کلاس‌ها', icon:'📚'},
-    {key:'students', label:'دانش‌آموزان', icon:'🎓'},
-    {key:'teachers', label:'دبیران', icon:'🧑‍🏫'},
-    {key:'deputies', label:'معاونان', icon:'🧑‍💼'},
-    {key:'reports', label:'گزارش‌ها', icon:'📊'},
-    {key:'academicYear', label:'سال تحصیلی', icon:'📅'},
-    {key:'settings', label:'تنظیمات', icon:'⚙️'}
+    {key:'dashboard', label:'داشبورد', icon:'dashboard'},
+    {key:'attendance', label:'حضور و غیاب', icon:'attendance'},
+    {key:'classes', label:'کلاس‌ها', icon:'classes'},
+    {key:'students', label:'دانش‌آموزان', icon:'students'},
+    {key:'teachers', label:'دبیران', icon:'teachers'},
+    {key:'deputies', label:'معاونان', icon:'deputies'},
+    {key:'reports', label:'گزارش‌ها', icon:'reports'},
+    {key:'academicYear', label:'سال تحصیلی', icon:'academicYear'},
+    {key:'settings', label:'تنظیمات', icon:'settings'}
   ],
   deputy: [
-    {key:'dashboard', label:'داشبورد', icon:'🏠'},
-    {key:'attendance', label:'حضور و غیاب', icon:'✅'},
-    {key:'classes', label:'کلاس‌ها', icon:'📚'},
-    {key:'students', label:'دانش‌آموزان', icon:'🎓'},
-    {key:'reports', label:'گزارش‌ها', icon:'📊'},
-    {key:'academicYear', label:'سال تحصیلی', icon:'📅'}
+    {key:'dashboard', label:'داشبورد', icon:'dashboard'},
+    {key:'attendance', label:'حضور و غیاب', icon:'attendance'},
+    {key:'classes', label:'کلاس‌ها', icon:'classes'},
+    {key:'students', label:'دانش‌آموزان', icon:'students'},
+    {key:'reports', label:'گزارش‌ها', icon:'reports'},
+    {key:'academicYear', label:'سال تحصیلی', icon:'academicYear'}
   ],
   teacher: [
-    {key:'dashboard', label:'داشبورد', icon:'🏠'},
-    {key:'myClasses', label:'کلاس‌های من', icon:'📚'},
-    {key:'attendance', label:'حضور و غیاب', icon:'✅'}
+    {key:'dashboard', label:'داشبورد', icon:'dashboard'},
+    {key:'myClasses', label:'کلاس‌های من', icon:'myClasses'},
+    {key:'attendance', label:'حضور و غیاب', icon:'attendance'}
   ]
 };
 
@@ -1272,7 +2218,7 @@ function boot(){
   applyTheme(getThemeMode());
 
   document.getElementById('userChip').innerHTML =
-    `${cu.name||''} ${cu.family||''}<span class="role">${ROLE_LABELS[cu.role]||cu.role}</span>`;
+    `<span class="role-icon-chip">${roleIcon(cu.role, 16)} <span>${cu.name||''} ${cu.family||''}</span></span><span class="role">${ROLE_LABELS[cu.role]||cu.role}</span>`;
 
   const schools = lsGet(LS_KEYS.SCHOOLS, []);
   const school = schools.find(s=>s.id===cu.schoolId);
@@ -1302,7 +2248,7 @@ function renderNav(role){
     const restActive = rest.some(it=>it.key===currentPage);
     container.innerHTML = visible.map(it=>navItemHtml(it)).join('') +
       `<div class="nav-item ${restActive?'active':''}" onclick="openMoreNav()">
-         <span class="nav-icon">☰</span><span>بیشتر</span>
+         <span class="nav-icon">${icon("more", 18)}</span><span>بیشتر</span>
        </div>`;
   } else {
     container.innerHTML = items.map(it=>navItemHtml(it)).join('');
@@ -1310,7 +2256,7 @@ function renderNav(role){
 }
 function navItemHtml(it){
   return `<div class="nav-item ${it.key===currentPage?'active':''}" data-key="${it.key}" onclick="goPage('${it.key}')">
-     <span class="nav-icon">${it.icon}</span><span>${it.label}</span>
+     <span class="nav-icon">${icon(it.icon, 18)}</span><span>${it.label}</span>
    </div>`;
 }
 function openMoreNav(){
@@ -1318,11 +2264,11 @@ function openMoreNav(){
   const items = (NAV_CONFIG[cu.role] || []).slice(4);
   const html = `<div class="more-nav-list">${items.map(it=>
     `<div class="more-nav-item" onclick="closeModal();goPage('${it.key}')">
-       <span class="nav-icon">${it.icon}</span><span>${it.label}</span>
+       <span class="nav-icon">${icon(it.icon, 18)}</span><span>${it.label}</span>
      </div>`
   ).join('')}
   <div class="more-nav-item" onclick="closeModal();handleLogout();" style="color:var(--danger);">
-    <span class="nav-icon">⎋</span><span>خروج</span>
+    <span class="nav-icon">${icon("logout", 18)}</span><span>خروج</span>
   </div>
   </div>`;
   openModal('بیشتر', html);
@@ -1358,7 +2304,7 @@ function renderPage(key){
   document.getElementById('pageTitle').textContent = PAGE_TITLES[key] || key;
   const el = document.getElementById('pageContent');
   el.classList.remove('page-fade-in');
-  el.innerHTML = skeletonPageHtml();
+  el.innerHTML = skeletonPageHtml(key);
   clearTimeout(__pageRenderTimer);
   __pageRenderTimer = setTimeout(()=>{
     renderPageContent(key);
@@ -1398,7 +2344,7 @@ function renderPageContent(key){
 function renderPlaceholder(title){
   return `
     <div class="placeholder-page panel">
-      <div class="icon">🚧</div>
+      <div class="icon">${icon("warning", 36)}</div>
       <h3>${title}</h3>
       <p>این بخش در فاز بعدی توسعه پیاده‌سازی خواهد شد.</p>
     </div>
@@ -1415,7 +2361,7 @@ function renderSuperadminDashboard(cu){
 
   return `
     ${welcomeCardHtml(cu)}
-    ${heroStatHtml('🏫', schools.length, 'تعداد مدارس فعال در سامانه', schools.length ? 'success' : 'warning')}
+    ${heroStatHtml('schools', schools.length, 'تعداد مدارس فعال در سامانه', schools.length ? 'success' : 'warning')}
     <div class="grid-cards">
       <div class="stat-card"><div class="num">${schools.length}</div><div class="label">تعداد مدارس فعال</div></div>
       <div class="stat-card success"><div class="num">${principals.length}</div><div class="label">تعداد مدیران مدارس</div></div>
@@ -1430,7 +2376,7 @@ function renderSuperadminDashboard(cu){
             ${schools.map(s=>`<tr><td>${s.name}</td><td>${s.address||'-'}</td></tr>`).join('')}
           </tbody>
         </table>
-      ` : `<div class="empty-state"><div class="icon">🏫</div><p>هنوز مدرسه‌ای ثبت نشده است.</p></div>`}
+      ` : `${emptyStateHtml(null, 'هنوز مدرسه‌ای ثبت نشده است.')}`}
     </div>
   `;
 }
@@ -1468,7 +2414,7 @@ function roleStatsBlock(schoolId){
   });
 
   return `
-    ${heroStatHtml('📋', pendingClasses.length, 'کلاس‌های ثبت‌نشده امروز', pendingClasses.length ? 'warning' : 'success')}
+    ${heroStatHtml('reports', pendingClasses.length, 'کلاس‌های ثبت‌نشده امروز', pendingClasses.length ? 'warning' : 'success')}
     <div class="grid-cards">
       <div class="stat-card"><div class="num">${students.length}</div><div class="label">تعداد دانش‌آموزان</div></div>
       <div class="stat-card"><div class="num">${classes.length}</div><div class="label">تعداد کلاس‌ها</div></div>
@@ -1488,14 +2434,14 @@ function roleStatsBlock(schoolId){
 
 function renderNotifications(pendingClasses, donedClasses){
   if(pendingClasses.length===0 && donedClasses.length===0){
-    return `<div class="empty-state"><div class="icon">🔔</div><p>هنوز کلاسی ثبت نشده است.</p></div>`;
+    return `${emptyStateHtml(null, 'هنوز کلاسی ثبت نشده است.')}`;
   }
   let html = '<div class="notif-list">';
   donedClasses.forEach(c=>{
-    html += `<div class="notif-item ok">✓ حضور و غیاب «${c.name}» ثبت شد.</div>`;
+    html += `<div class="notif-item ok">${icon("check", 15, "notif-ic-ok")} حضور و غیاب «${c.name}» ثبت شد.</div>`;
   });
   pendingClasses.forEach(c=>{
-    html += `<div class="notif-item warn">⚠ کلاس «${c.name}» هنوز حضور و غیاب نشده است.</div>`;
+    html += `<div class="notif-item warn">${icon("warning", 15, "notif-ic-warn")} کلاس «${c.name}» هنوز حضور و غیاب نشده است.</div>`;
   });
   html += '</div>';
   return html;
@@ -1514,7 +2460,7 @@ function renderTeacherDashboard(cu){
 
   return `
     ${welcomeCardHtml(cu)}
-    ${heroStatHtml('✅', pendingCount, 'کلاس‌های ثبت‌نشده امروز', pendingCount ? 'warning' : 'success')}
+    ${heroStatHtml('attendance', pendingCount, 'کلاس‌های ثبت‌نشده امروز', pendingCount ? 'warning' : 'success')}
     <div class="grid-cards">
       <div class="stat-card"><div class="num">${myClasses.length}</div><div class="label">کلاس‌های من</div></div>
       <div class="stat-card success"><div class="num">${myClasses.filter(c=>doneIds.has(c.id)).length}</div><div class="label">ثبت‌شده امروز</div></div>
@@ -1534,7 +2480,7 @@ function renderTeacherDashboard(cu){
             `).join('')}
           </tbody>
         </table>
-      ` : `<div class="empty-state"><div class="icon">📚</div><p>هنوز کلاسی به شما اختصاص داده نشده است.</p></div>`}
+      ` : `${emptyStateHtml(null, 'هنوز کلاسی به شما اختصاص داده نشده است.')}`}
     </div>
   `;
 }
@@ -1572,7 +2518,7 @@ function renderClassesPage(cu){
 
   return `
     <div class="panel">
-      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openClassModal('${cu.schoolId}')">➕ افزودن کلاس</button></div>
+      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openClassModal('${cu.schoolId}')">${icon("add", 15)} افزودن کلاس</button></div>
       <h2>لیست کلاس‌ها</h2>
       ${classes.length ? `
         ${tableSearchHtml('classesTable', 'جستجوی نام کلاس یا دبیر...')}
@@ -1580,7 +2526,7 @@ function renderClassesPage(cu){
           <thead><tr><th>نام کلاس</th><th>دبیر مسئول</th><th>تعداد دانش‌آموز</th><th>وضعیت</th><th>عملیات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      ` : emptyStateHtml(null, 'هنوز کلاسی ثبت نشده است.', '➕ افزودن کلاس', `openClassModal('${cu.schoolId}')`)}
+      ` : emptyStateHtml(null, 'هنوز کلاسی ثبت نشده است.', '${icon("add", 15)} افزودن کلاس', `openClassModal('${cu.schoolId}')`)}
     </div>
   `;
 }
@@ -1698,7 +2644,7 @@ function renderStudentsPage(cu){
         <div style="min-width:180px;">
           <select id="studentsFilterSelect" onchange="onStudentsFilterChange(this.value)">${filterOptions}</select>
         </div>
-        <button class="btn btn-primary" style="width:auto" ${addDisabled?'disabled title="ابتدا یک کلاس ایجاد کنید"':''} onclick="openStudentModal('${cu.role}','${cu.schoolId}')">➕ افزودن دانش‌آموز</button>
+        <button class="btn btn-primary" style="width:auto" ${addDisabled?'disabled title="ابتدا یک کلاس ایجاد کنید"':''} onclick="openStudentModal('${cu.role}','${cu.schoolId}')">${icon("add", 15)} افزودن دانش‌آموز</button>
       </div>
       <h2>لیست دانش‌آموزان</h2>
       ${students.length ? `
@@ -1707,7 +2653,7 @@ function renderStudentsPage(cu){
           <thead><tr><th>کد دانش‌آموزی</th><th>نام و نام خانوادگی</th><th>کلاس</th><th>عملیات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      ` : emptyStateHtml(null, 'دانش‌آموزی یافت نشد.', addDisabled ? null : '➕ افزودن دانش‌آموز', `openStudentModal('${cu.role}','${cu.schoolId}')`)}
+      ` : emptyStateHtml(null, 'دانش‌آموزی یافت نشد.', addDisabled ? null : '${icon("add", 15)} افزودن دانش‌آموز', `openStudentModal('${cu.role}','${cu.schoolId}')`)}
     </div>
   `;
 }
@@ -1763,15 +2709,28 @@ function saveStudent(schoolId, studentId){
   goPage('students');
 }
 
+/* --- حذف با Undo واقعی (Phase 10.3) ---
+   به‌جای پرسیدن تأییدیه قبل از حذف، بلافاصله (optimistic) حذف می‌کنیم و
+   یک toast با دکمه «بازگردانی» به مدت ۵ ثانیه نشان می‌دهیم. */
 function deleteStudent(studentId){
-  confirmDelete('آیا از حذف این دانش‌آموز مطمئن هستید؟ این عملیات قابل بازگشت نیست.', `deleteStudentConfirmed('${studentId}')`);
-}
-function deleteStudentConfirmed(studentId){
-  let students = lsGet(LS_KEYS.STUDENTS, []);
-  students = students.filter(s=>s.id!==studentId);
-  lsSet(LS_KEYS.STUDENTS, students);
-  showToast('دانش‌آموز حذف شد');
+  const students = lsGet(LS_KEYS.STUDENTS, []);
+  const idx = students.findIndex(s=>s.id===studentId);
+  if(idx === -1) return;
+  const removed = students[idx];
+
+  const remaining = students.slice();
+  remaining.splice(idx, 1);
+  lsSet(LS_KEYS.STUDENTS, remaining);
   goPage('students');
+
+  showUndoToast('دانش‌آموز حذف شد', function undoDeleteStudent(){
+    const current = lsGet(LS_KEYS.STUDENTS, []);
+    const restored = current.slice();
+    restored.splice(Math.min(idx, restored.length), 0, removed);
+    lsSet(LS_KEYS.STUDENTS, restored);
+    goPage('students');
+    showToast('حذف دانش‌آموز بازگردانی شد', 'info');
+  });
 }
 
 /* ---------------------- TEACHERS ---------------------- */
@@ -1800,14 +2759,14 @@ function renderTeachersPage(cu){
 
   return `
     <div class="panel">
-      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openTeacherModal('${cu.schoolId}')">➕ افزودن دبیر</button></div>
+      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openTeacherModal('${cu.schoolId}')">${icon("add", 15)} افزودن دبیر</button></div>
       <h2>لیست دبیران</h2>
       ${teachers.length ? `
         <table>
           <thead><tr><th>نام و نام خانوادگی</th><th>نام کاربری</th><th>کلاس‌های مجاز</th><th>وضعیت</th><th>عملیات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      ` : emptyStateHtml(null, 'هنوز دبیری ثبت نشده است.', '➕ افزودن دبیر', `openTeacherModal('${cu.schoolId}')`)}
+      ` : emptyStateHtml(null, 'هنوز دبیری ثبت نشده است.', '${icon("add", 15)} افزودن دبیر', `openTeacherModal('${cu.schoolId}')`)}
     </div>
   `;
 }
@@ -1839,7 +2798,7 @@ function openTeacherModal(schoolId, teacherId){
   `);
 }
 
-function saveTeacher(schoolId, teacherId){
+async function saveTeacher(schoolId, teacherId){
   const name = document.getElementById('fTFirst').value.trim();
   const family = document.getElementById('fTLast').value.trim();
   const username = document.getElementById('fTUsername').value.trim();
@@ -1857,11 +2816,11 @@ function saveTeacher(schoolId, teacherId){
     const idx = users.findIndex(u=>u.id===teacherId);
     if(idx>-1){
       Object.assign(users[idx], { name, family, username, allowedClassIds });
-      if(password) users[idx].password = password;
+      if(password) users[idx].password = await hashPassword(password);
     }
   } else {
     if(!password){ showFormError('رمز عبور الزامی است.'); return; }
-    users.push({ id: uid('u'), username, password, role:'teacher', name, family, schoolId, allowedClassIds, active:true });
+    users.push({ id: uid('u'), username, password: await hashPassword(password), role:'teacher', name, family, schoolId, allowedClassIds, active:true });
   }
   lsSet(LS_KEYS.USERS, users);
   closeModal();
@@ -1888,14 +2847,14 @@ function renderDeputiesPage(cu){
 
   return `
     <div class="panel">
-      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openDeputyModal('${cu.schoolId}')">➕ افزودن معاون</button></div>
+      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openDeputyModal('${cu.schoolId}')">${icon("add", 15)} افزودن معاون</button></div>
       <h2>لیست معاونان</h2>
       ${deputies.length ? `
         <table>
           <thead><tr><th>نام و نام خانوادگی</th><th>نام کاربری</th><th>وضعیت</th><th>عملیات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      ` : emptyStateHtml(null, 'هنوز معاونی ثبت نشده است.', '➕ افزودن معاون', `openDeputyModal('${cu.schoolId}')`)}
+      ` : emptyStateHtml(null, 'هنوز معاونی ثبت نشده است.', '${icon("add", 15)} افزودن معاون', `openDeputyModal('${cu.schoolId}')`)}
     </div>
   `;
 }
@@ -1917,7 +2876,7 @@ function openDeputyModal(schoolId, deputyId){
   `);
 }
 
-function saveDeputy(schoolId, deputyId){
+async function saveDeputy(schoolId, deputyId){
   const name = document.getElementById('fDFirst').value.trim();
   const family = document.getElementById('fDLast').value.trim();
   const username = document.getElementById('fDUsername').value.trim();
@@ -1934,11 +2893,11 @@ function saveDeputy(schoolId, deputyId){
     const idx = users.findIndex(u=>u.id===deputyId);
     if(idx>-1){
       Object.assign(users[idx], { name, family, username });
-      if(password) users[idx].password = password;
+      if(password) users[idx].password = await hashPassword(password);
     }
   } else {
     if(!password){ showFormError('رمز عبور الزامی است.'); return; }
-    users.push({ id: uid('u'), username, password, role:'deputy', name, family, schoolId, active:true });
+    users.push({ id: uid('u'), username, password: await hashPassword(password), role:'deputy', name, family, schoolId, active:true });
   }
   lsSet(LS_KEYS.USERS, users);
   closeModal();
@@ -1984,7 +2943,7 @@ function renderMyClassesPage(cu){
           <thead><tr><th>نام کلاس</th><th>تعداد دانش‌آموز</th><th>وضعیت امروز</th><th>عملیات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      ` : `<div class="empty-state"><div class="icon">📚</div><p>هنوز کلاسی به شما اختصاص داده نشده است.</p></div>`}
+      ` : `${emptyStateHtml(null, 'هنوز کلاسی به شما اختصاص داده نشده است.')}`}
     </div>
   `;
 }
@@ -2002,7 +2961,7 @@ function renderAttendancePage(cu){
 function renderTeacherAttendance(cu){
   const classes = getVisibleClasses(cu).filter(c=>!c.archived);
   if(!classes.length){
-    return `<div class="panel"><div class="empty-state"><div class="icon">📚</div><p>هنوز کلاسی به شما اختصاص داده نشده است.</p></div></div>`;
+    return `<div class="panel">${emptyStateHtml(null, 'هنوز کلاسی به شما اختصاص داده نشده است.')}</div>`;
   }
 
   if(!selectedAttendanceClassId || !classes.find(c=>c.id===selectedAttendanceClassId)){
@@ -2030,7 +2989,7 @@ function renderTeacherAttendance(cu){
           <h2>حضور و غیاب کلاس «${cls.name}»</h2>
           ${switcher}
         </div>
-        <div class="empty-state"><div class="icon">🎓</div><p>این کلاس هنوز دانش‌آموزی ندارد.</p></div>
+        ${emptyStateHtml(null, 'این کلاس هنوز دانش‌آموزی ندارد.')}
       </div>
     `;
   }
@@ -2175,7 +3134,7 @@ function renderManagerAttendance(cu){
   const activeYear = getActiveAcademicYear(cu.schoolId);
   const classes = lsGet(LS_KEYS.CLASSES, []).filter(c=>c.schoolId===cu.schoolId && !c.archived && (!activeYear || c.academicYearId===activeYear.id));
   if(!classes.length){
-    return `<div class="panel"><div class="empty-state"><div class="icon">📚</div><p>هنوز کلاسی برای این مدرسه ثبت نشده است.</p></div></div>`;
+    return `<div class="panel">${emptyStateHtml(null, 'هنوز کلاسی برای این مدرسه ثبت نشده است.')}</div>`;
   }
 
   if(!managerAttendanceClassId || !classes.find(c=>c.id===managerAttendanceClassId)){
@@ -2202,7 +3161,7 @@ function renderManagerAttendance(cu){
       </div>
       <div class="field" style="min-width:170px;">
         <label>تاریخ</label>
-        <input type="date" id="mgrAttDateInput" value="${managerAttendanceDate}" onchange="setManagerAttendanceDate(this.value)">
+        ${jalaliDatePickerHtml('mgrAttDateInput', managerAttendanceDate, 'setManagerAttendanceDate')}
       </div>
     </div>
   `;
@@ -2212,7 +3171,7 @@ function renderManagerAttendance(cu){
       <div class="panel">
         <h2>حضور و غیاب — مدیریت</h2>
         ${picker}
-        <div class="empty-state"><div class="icon">🎓</div><p>این کلاس هنوز دانش‌آموزی ندارد.</p></div>
+        ${emptyStateHtml(null, 'این کلاس هنوز دانش‌آموزی ندارد.')}
       </div>
     `;
   }
@@ -2371,11 +3330,11 @@ function renderReportsPage(cu){
       </div>
       <div class="field" style="min-width:150px;">
         <label>از تاریخ</label>
-        <input type="date" id="rptFrom" value="${reportsFilters.from}">
+        ${jalaliDatePickerHtml('rptFrom', reportsFilters.from, null)}
       </div>
       <div class="field" style="min-width:150px;">
         <label>تا تاریخ</label>
-        <input type="date" id="rptTo" value="${reportsFilters.to}">
+        ${jalaliDatePickerHtml('rptTo', reportsFilters.to, null)}
       </div>
       <div class="field" style="min-width:170px;">
         <label>کلاس</label>
@@ -2428,7 +3387,7 @@ function renderReportsPage(cu){
     }).sort((x,y)=> x.className.localeCompare(y.className) || x.name.localeCompare(y.name));
 
     if(!rows.length){
-      tableHtml = `<div class="empty-state"><div class="icon">📊</div><p>با فیلترهای انتخاب‌شده، رکوردی یافت نشد.</p></div>`;
+      tableHtml = `emptyStateHtml(null, 'با فیلترهای انتخاب‌شده، رکوردی یافت نشد.')`;
     } else {
       tableHtml = `
         ${tableSearchHtml('reportsResultTable', 'جستجو در نتایج...')}
@@ -2463,7 +3422,7 @@ function renderReportsPage(cu){
     rows.sort((x,y)=> y.date.localeCompare(x.date) || x.className.localeCompare(y.className));
 
     if(!rows.length){
-      tableHtml = `<div class="empty-state"><div class="icon">📊</div><p>با فیلترهای انتخاب‌شده، رکوردی یافت نشد.</p></div>`;
+      tableHtml = `emptyStateHtml(null, 'با فیلترهای انتخاب‌شده، رکوردی یافت نشد.')`;
     } else {
       tableHtml = `
         ${tableSearchHtml('reportsResultTable', 'جستجو در نتایج...')}
@@ -2577,7 +3536,9 @@ function exportReportsPdf(){
   printBox.appendChild(tableClone);
   document.body.appendChild(printBox);
 
-  html2canvas(printBox, { scale:2, backgroundColor:'#ffffff' }).then(canvas=>{
+  // صبر تا فونت Vazirmatn کامل لود شود، وگرنه رندر متن فارسی (به‌خصوص اتصال حروف) خراب می‌شود
+  const renderPdf = ()=>{
+    html2canvas(printBox, { scale:2, backgroundColor:'#ffffff', foreignObjectRendering:true, useCORS:true }).then(canvas=>{
     document.body.removeChild(printBox);
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
@@ -2607,6 +3568,12 @@ function exportReportsPdf(){
     alert('خطا در تولید PDF.');
     if(btn){ btn.textContent = originalText; btn.disabled = false; }
   });
+  };
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(renderPdf).catch(renderPdf);
+  } else {
+    renderPdf();
+  }
 }
 
 /* =====================================================================
@@ -2654,15 +3621,15 @@ function renderAcademicYearPage(cu){
   return `
     <div class="panel">
       <div class="toolbar" style="display:flex;gap:8px;flex-wrap:wrap;">
-        ${readOnly? '' : `<button class="btn btn-outline" style="width:auto" onclick="openNewYearModal('${schoolId}')">➕ تعریف سال تحصیلی جدید</button>`}
-        ${readOnly? '' : `<button class="btn btn-primary" style="width:auto" onclick="openStartNewYearModal('${schoolId}')">🚀 شروع سال تحصیلی جدید</button>`}
+        ${readOnly? '' : `<button class="btn btn-outline" style="width:auto" onclick="openNewYearModal('${schoolId}')">${icon("add", 15)} تعریف سال تحصیلی جدید</button>`}
+        ${readOnly? '' : `<button class="btn btn-primary" style="width:auto" onclick="openStartNewYearModal('${schoolId}')">${icon("rocket", 15)} شروع سال تحصیلی جدید</button>`}
       </div>
       <h2>سال‌های تحصیلی</h2>
       ${years.length ? `
       <table>
         <thead><tr><th>عنوان</th><th>وضعیت</th><th>تعداد کلاس</th><th>تعداد دانش‌آموز</th><th>عملیات</th></tr></thead>
         <tbody>${rows}</tbody>
-      </table>` : `<div class="empty-state"><div class="icon">📅</div><p>هنوز سال تحصیلی‌ای ثبت نشده است.</p></div>`}
+      </table>` : `${emptyStateHtml(null, 'هنوز سال تحصیلی‌ای ثبت نشده است.')}`}
     </div>
     ${readOnly ? '' : `
     <div class="panel">
@@ -2674,11 +3641,11 @@ function renderAcademicYearPage(cu){
 
 function renderMoveStudentForm(schoolId){
   const activeYear = getActiveAcademicYear(schoolId);
-  if(!activeYear) return `<div class="empty-state"><div class="icon">🔀</div><p>سال تحصیلی جاری‌ای یافت نشد.</p></div>`;
+  if(!activeYear) return `${emptyStateHtml(null, 'سال تحصیلی جاری‌ای یافت نشد.')}`;
   const classes = lsGet(LS_KEYS.CLASSES, []).filter(c=>c.schoolId===schoolId && !c.archived && c.academicYearId===activeYear.id);
   const students = lsGet(LS_KEYS.STUDENTS, []).filter(s=>s.schoolId===schoolId && s.academicYearId===activeYear.id);
   if(!students.length || !classes.length){
-    return `<div class="empty-state"><div class="icon">🔀</div><p>دانش‌آموز یا کلاسی برای جابجایی در سال جاری وجود ندارد.</p></div>`;
+    return `${emptyStateHtml(null, 'دانش‌آموز یا کلاسی برای جابجایی در سال جاری وجود ندارد.')}`;
   }
   const classMap = {}; classes.forEach(c=>classMap[c.id]=c.name);
   const studentOptions = students.map(s=>`<option value="${s.id}">${s.firstName} ${s.lastName} (${classMap[s.classId]||'-'})</option>`).join('');
@@ -2743,7 +3710,7 @@ function openStartNewYearModal(schoolId){
         <label style="display:flex;gap:8px;align-items:center;font-weight:400;"><input type="radio" name="transferMode" value="empty"> شروع خالی (بدون انتقال)</label>
       </div>
     </div>
-    <p style="font-size:12.5px;color:var(--text-muted);line-height:1.8;">⚠ سال تحصیلی جاری پس از این عملیات آرشیو و فقط‌خواندنی می‌شود. کلاس‌های «دوازدهم» در حالت ارتقا فارغ‌التحصیل شده و منتقل نمی‌شوند. این عملیات به‌سادگی قابل بازگشت نیست.</p>
+    <p style="font-size:12.5px;color:var(--text-muted);line-height:1.8;">${icon("warning", 15)} سال تحصیلی جاری پس از این عملیات آرشیو و فقط‌خواندنی می‌شود. کلاس‌های «دوازدهم» در حالت ارتقا فارغ‌التحصیل شده و منتقل نمی‌شوند. این عملیات به‌سادگی قابل بازگشت نیست.</p>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal()">انصراف</button>
       <button class="btn btn-danger" onclick="confirmStartNewYear('${schoolId}')">شروع سال تحصیلی جدید</button>
@@ -2836,7 +3803,7 @@ function viewArchivedYearDetails(yearId){
     return `<tr><td>${c.name}</td><td>${cnt}</td></tr>`;
   }).join('');
   openModal('سال تحصیلی «'+y.title+'» (فقط‌خواندنی)', `
-    ${classes.length ? `<table><thead><tr><th>نام کلاس</th><th>تعداد دانش‌آموز</th></tr></thead><tbody>${rows}</tbody></table>` : `<div class="empty-state"><div class="icon">📅</div><p>کلاسی برای این سال تحصیلی ثبت نشده است.</p></div>`}
+    ${classes.length ? `<table><thead><tr><th>نام کلاس</th><th>تعداد دانش‌آموز</th></tr></thead><tbody>${rows}</tbody></table>` : `${emptyStateHtml(null, 'کلاسی برای این سال تحصیلی ثبت نشده است.')}`}
     <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">بستن</button></div>
   `);
 }
@@ -2874,7 +3841,7 @@ function renderSchoolsPage(cu){
 
   return `
     <div class="panel">
-      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openSchoolModal()">➕ افزودن مدرسه</button></div>
+      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openSchoolModal()">${icon("add", 15)} افزودن مدرسه</button></div>
       <h2>مدارس فعال</h2>
       ${schools.length ? `
         ${tableSearchHtml('schoolsTable', 'جستجوی نام یا آدرس مدرسه...')}
@@ -2882,7 +3849,7 @@ function renderSchoolsPage(cu){
           <thead><tr><th>نام مدرسه</th><th>آدرس</th><th>مدیر مدرسه</th><th>تعداد کلاس</th><th>تعداد دانش‌آموز</th><th>وضعیت</th><th>عملیات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      ` : emptyStateHtml(null, 'هنوز مدرسه‌ای ثبت نشده است.', '➕ افزودن مدرسه', `openSchoolModal()`)}
+      ` : emptyStateHtml(null, 'هنوز مدرسه‌ای ثبت نشده است.', '${icon("add", 15)} افزودن مدرسه', `openSchoolModal()`)}
     </div>
     ${archivedSchools.length ? `
     <div class="panel">
@@ -2973,7 +3940,7 @@ function renderSchoolAdminsPage(cu){
 
   return `
     <div class="panel">
-      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openSchoolAdminModal()">➕ افزودن مدیر مدرسه</button></div>
+      <div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openSchoolAdminModal()">${icon("add", 15)} افزودن مدیر مدرسه</button></div>
       <h2>لیست مدیران مدارس</h2>
       ${principals.length ? `
         ${tableSearchHtml('schoolAdminsTable', 'جستجوی نام یا نام کاربری...')}
@@ -2981,7 +3948,7 @@ function renderSchoolAdminsPage(cu){
           <thead><tr><th>نام و نام خانوادگی</th><th>نام کاربری</th><th>مدرسه</th><th>وضعیت</th><th>عملیات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      ` : emptyStateHtml(null, 'هنوز مدیر مدرسه‌ای ثبت نشده است.', '➕ افزودن مدیر مدرسه', `openSchoolAdminModal()`)}
+      ` : emptyStateHtml(null, 'هنوز مدیر مدرسه‌ای ثبت نشده است.', '${icon("add", 15)} افزودن مدیر مدرسه', `openSchoolAdminModal()`)}
     </div>
   `;
 }
@@ -3009,7 +3976,7 @@ function openSchoolAdminModal(principalId){
   `);
 }
 
-function saveSchoolAdmin(principalId){
+async function saveSchoolAdmin(principalId){
   const name = document.getElementById('fPAFirst').value.trim();
   const family = document.getElementById('fPALast').value.trim();
   const username = document.getElementById('fPAUsername').value.trim();
@@ -3028,11 +3995,11 @@ function saveSchoolAdmin(principalId){
     const idx = users.findIndex(u=>u.id===principalId);
     if(idx>-1){
       Object.assign(users[idx], { name, family, username, schoolId });
-      if(password) users[idx].password = password;
+      if(password) users[idx].password = await hashPassword(password);
     }
   } else {
     if(!password){ showFormError('رمز عبور الزامی است.'); return; }
-    users.push({ id: uid('u'), username, password, role:'principal', name, family, schoolId, active:true });
+    users.push({ id: uid('u'), username, password: await hashPassword(password), role:'principal', name, family, schoolId, active:true });
   }
   lsSet(LS_KEYS.USERS, users);
   closeModal();
@@ -3094,10 +4061,15 @@ function renderSettingsPage(cu){
         </select>
       </div>
     </div>
+
+    <div class="settings-footer" style="margin-top:28px;text-align:center;padding:16px 0;border-top:1px solid var(--border);">
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">نسخه: v9.6</div>
+      <div style="font-size:12px;color:var(--text-muted);letter-spacing:0.04em;">PeyByte &nbsp;&nbsp;&nbsp;&nbsp; by Peyman Nikbakht</div>
+    </div>
   `;
 }
 
-function changePassword(userId){
+async function changePassword(userId){
   const errBox = document.getElementById('settingsPwError');
   if(errBox){ errBox.style.display='none'; }
 
@@ -3113,11 +4085,12 @@ function changePassword(userId){
   const user = users.find(u=>u.id===userId);
   if(!user){ showPwError('کاربر یافت نشد.'); return; }
 
-  if(!cur || user.password !== cur){ showPwError('رمز عبور فعلی صحیح نیست.'); return; }
+  const curOk = cur && await verifyPassword(cur, user.password);
+  if(!curOk){ showPwError('رمز عبور فعلی صحیح نیست.'); return; }
   if(!next){ showPwError('رمز عبور جدید نمی‌تواند خالی باشد.'); return; }
   if(next !== next2){ showPwError('رمز عبور جدید و تکرار آن یکسان نیستند.'); return; }
 
-  user.password = next;
+  user.password = await hashPassword(next);
   lsSet(LS_KEYS.USERS, users);
 
   const cu = lsGet(LS_KEYS.CURRENT_USER, null);
@@ -3136,9 +4109,9 @@ function changePassword(userId){
 /* توجه: boot() دیگر مستقیم فراخوانی نمی‌شود؛ چون داده‌ها اکنون از Firestore
    می‌آیند، اسکریپت ماژول بالای صفحه پس از بارگذاری کامل داده‌ها یک‌بار
    window.appInit() را صدا می‌زند (نگاه کنید به انتهای بلوک Firebase). */
-function appInit(){
+async function appInit(){
   document.getElementById('loadingScreen').style.display = 'none';
-  seedIfEmpty();
+  await seedIfEmpty();
   migrateAcademicYearData();
   window.__appBooted = true;
   boot();
@@ -3158,5 +4131,5 @@ window.refreshAfterRemoteChange = refreshAfterRemoteChange;
 // اگر اسکریپت Firestore زودتر از این نقطه آماده شده باشد (حالت نادر)
 if(window.__fsReady){ appInit(); }
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a29a5902ebf1e4b5',t:'MTc4NjQ4Mzg5MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
